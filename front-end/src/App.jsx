@@ -33,7 +33,9 @@ function App() {
 					</div>
 				</div>
 
-				{isSwapActive ? <SwapTokenModal /> : <TransferTokenModal />}
+				<div className="main-panel">
+					{isSwapActive ? <SwapTokenModal /> : <TransferTokenModal />}
+				</div>
 				<ImportAccount />
 			</div>
 		</div>

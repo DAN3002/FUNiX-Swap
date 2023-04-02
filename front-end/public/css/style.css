@@ -205,7 +205,7 @@ input {
 
 /*========= Import Account =========*/
 .import-account {
-	margin-top: 45px;
+	/* margin-top: 45px; */
 	padding: 20px 25px;
 	background-color: rgba(26, 32, 64, 0.1);
 }
@@ -310,3 +310,7 @@ input {
 	padding: 40px 50px 0;
 }
 /*========= End Transfer =========*/
+
+.main-panel {
+	padding-bottom: 45px;
+}
