@@ -14,9 +14,6 @@ function App() {
 			<div className="main-content">
 				<div className="tab-container">
 					<div className="tab">
-						{/* <div className="tab__item tab__item--active" data-content-id="swap">SWAP</div>
-						<div className="tab__item" data-content-id="transfer">TRANSFER</div> */}
-
 						<div
 							className={`tab__item ${
 								isSwapActive ? 'tab__item--active' : ''
