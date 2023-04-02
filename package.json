@@ -1,0 +1,20 @@
+{
+	"name": "funix-swap",
+	"version": "1.0.0",
+	"description": "",
+	"main": "index.js",
+	"scripts": {
+		"lint": "eslint . --ext .js,.jsx"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/DAN3002/FUNiX-Swap.git"
+	},
+	"keywords": [],
+	"author": "",
+	"license": "ISC",
+	"bugs": {
+		"url": "https://github.com/DAN3002/FUNiX-Swap/issues"
+	},
+	"homepage": "https://github.com/DAN3002/FUNiX-Swap#readme"
+}
