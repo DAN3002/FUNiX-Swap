@@ -330,12 +330,7 @@ input {
 
 /*========= Swap =========*/
 .swap {
-	display: none;
 	padding: 40px 50px 0;
-}
-
-.swap.active {
-	display: block;
 }
 
 .swap__icon {
@@ -358,11 +353,6 @@ input {
 
 /*========= Transfer =========*/
 .transfer {
-	display: none;
 	padding: 40px 50px 0;
-}
-
-.transfer.active {
-	display: block;
 }
 /*========= End Transfer =========*/
