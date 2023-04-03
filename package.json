@@ -4,7 +4,7 @@
 	"description": "",
 	"main": "index.js",
 	"scripts": {
-		"lint": "eslint . --ext .js,.jsx"
+		"lint": "eslint './front-end/' --ext .js,.jsx"
 	},
 	"repository": {
 		"type": "git",
