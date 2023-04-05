@@ -4,7 +4,8 @@
 	"description": "",
 	"main": "index.js",
 	"scripts": {
-		"lint": "eslint './front-end/' --ext .js,.jsx"
+		"lint": "eslint './front-end/' --ext .js,.jsx",
+		"local_remix": "npx remixd"
 	},
 	"repository": {
 		"type": "git",
@@ -16,5 +17,8 @@
 	"bugs": {
 		"url": "https://github.com/DAN3002/FUNiX-Swap/issues"
 	},
-	"homepage": "https://github.com/DAN3002/FUNiX-Swap#readme"
+	"homepage": "https://github.com/DAN3002/FUNiX-Swap#readme",
+	"dependencies": {
+		"@remix-project/remixd": "^0.6.13"
+	}
 }
