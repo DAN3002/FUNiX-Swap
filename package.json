@@ -5,7 +5,8 @@
 	"main": "index.js",
 	"scripts": {
 		"lint": "eslint './front-end/' --ext .js,.jsx",
-		"local_remix": "npx remixd"
+		"local_remix": "npx remixd",
+		"ganache": "ganache -p 8545 --defaultBalanceEther 100000 --wallet.seed 5555 -i 5777 --chain.chainId 5777"
 	},
 	"repository": {
 		"type": "git",
