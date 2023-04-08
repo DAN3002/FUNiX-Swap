@@ -19,7 +19,7 @@ contract Reserve {
         sellRate = _sellRate;
     }
 
-    function exchange(bool isBuy) public payable {
+    function exchange(bool isBuy, uint256 amount) public payable {
         if (isBuy) {
             /*
 				Buy supportedToken with ETH
@@ -27,13 +27,22 @@ contract Reserve {
 			 */
             // send supportedToken to msg.sender
 			// get address of msg.sender
-            supportedToken.approve(msg.sender, msg.value * buyRate);
-            supportedToken.transfer(msg.sender, msg.value * buyRate);
+            supportedToken.approve(msg.sender, amount * buyRate);
+            supportedToken.transfer(msg.sender, amount * buyRate);
         } else {
             /*
 				Sell supportedToken for ETH
 				=> Contract recieves supportedToken and sends ETH
 			 */
+            // send supportedToken to this contract
+            // supportedToken.approve(msg.sender, amount);
+            require(amount > 0, "amount must be greater than 0");
+            // supportedToken.approve(msg.sender, amount);
+            // supportedToken.transferFrom(msg.sender, address(this), 1);
+            // supportedToken.allowance(msg.sender, address(this));
+
+            // send ETH to msg.sender
+            // msg.sender.transfer(msg.value * sellRate);
         }
     }
 

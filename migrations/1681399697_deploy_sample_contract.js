@@ -15,11 +15,22 @@ module.exports = async function(deployer, network, accounts) {
 
 	  console.log("Balance of reserveA: ", web3.utils.fromWei(await tokenA.balanceOf(reserveA.address), 'ether') + " TKA");
 
-	  console.log("============ Checking reserveA ============");
+	  console.log("============ Checking reserveA buy ============");
 	  console.log("Before Balance of Account 1: ", web3.utils.fromWei(await tokenA.balanceOf(accounts[1]), 'ether') + " TKA");
 
 	  const srcAmount = web3.utils.toWei("1", "ether");
-	  await reserveA.exchange(true, {from: accounts[1], value: srcAmount})
+	  await reserveA.exchange(true, srcAmount, {from: accounts[1], value: srcAmount})
+
+	  console.log("After Balance of Account 1: ", web3.utils.fromWei(await tokenA.balanceOf(accounts[1]), 'ether') + " TKA");
+
+	  console.log("============ Checking reserveA sell ============");
+	  console.log("Before Balance of Account 1: ", web3.utils.fromWei(await tokenA.balanceOf(accounts[1]), 'ether') + " TKA");
+	  // check eth balance of reserveA
+	  console.log("Balance of reserveA: ", web3.utils.fromWei(await web3.eth.getBalance(reserveA.address), 'ether') + " ETH");
+
+	  const srcAmount2 = web3.utils.toWei("3", "ether");
+	  
+	  await reserveA.exchange(false, srcAmount2, {from: accounts[1], value: srcAmount2})
 
 	  console.log("After Balance of Account 1: ", web3.utils.fromWei(await tokenA.balanceOf(accounts[1]), 'ether') + " TKA");
 };
