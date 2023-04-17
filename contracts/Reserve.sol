@@ -1,6 +1,6 @@
-pragma solidity ^0.4.17;
+pragma solidity ^0.8.0;
 
-import "./ERC20.sol";
+import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 
 contract Reserve {
     ERC20 public supportedToken;
@@ -9,7 +9,7 @@ contract Reserve {
     // 1 supportedToken = sellRate ETH
     uint256 public sellRate;
 
-    function Reserve(
+    constructor(
         address _supportedToken,
         uint256 _buyRate,
         uint256 _sellRate
@@ -36,9 +36,9 @@ contract Reserve {
 			 */
             // send supportedToken to this contract
             // supportedToken.approve(msg.sender, amount);
-            require(amount > 0, "amount must be greater than 0");
+            // require(amount > 0, "amount must be greater than 0");
             // supportedToken.approve(msg.sender, amount);
-            // supportedToken.transferFrom(msg.sender, address(this), 1);
+            supportedToken.transferFrom(msg.sender, address(this), 1);
             // supportedToken.allowance(msg.sender, address(this));
 
             // send ETH to msg.sender

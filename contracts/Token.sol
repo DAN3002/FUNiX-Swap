@@ -1,20 +1,13 @@
-pragma solidity ^0.4.17;
+pragma solidity ^0.8.0;
 
-import "./ERC20.sol";
+import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 
-contract Token is StandardToken {
-
-    string public name;
-    string public symbol;
-    uint public decimals = 18;
-    uint public INITIAL_SUPPLY = 10**(50+18);
-
-    function Token(string _name, string _symbol, uint _decimals) public {
-        totalSupply = INITIAL_SUPPLY;
-        balances[msg.sender] = INITIAL_SUPPLY;
-        name = _name;
-        symbol = _symbol;
-        decimals = _decimals;
+contract MyToken is ERC20 {
+    constructor(string memory name, string memory symbol) ERC20(name, symbol) {
+        // Mint 100 tokens to msg.sender
+        // Similar to how
+        // 1 dollar = 100 cents
+        // 1 token = 1 * (10 ** decimals)
+        _mint(msg.sender, 100 * 10 ** uint(decimals()));
     }
-
 }
