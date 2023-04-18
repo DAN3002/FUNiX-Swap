@@ -49,5 +49,11 @@ module.exports = async function (deployer, network, accounts) {
 		from: accounts[1]
 	})
 
-	  console.log("After Balance of Account 1: ", web3.utils.fromWei(await tokenA.balanceOf(accounts[1]), 'ether') + " TKA");
+	console.log("After Balance of Account 1: ", web3.utils.fromWei(await tokenA.balanceOf(accounts[1]), 'ether') + " TKA");
+
+	// Check eth balance of reserveA
+	console.log("Balance of reserveA: ", web3.utils.fromWei(await web3.eth.getBalance(reserveA.address), 'ether') + " ETH");
+
+	// Check eth balance of account 1
+	console.log("Balance of Account 1: ", web3.utils.fromWei(await web3.eth.getBalance(accounts[1]), 'ether') + " ETH");
 };

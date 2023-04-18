@@ -40,13 +40,10 @@ contract Reserve {
             // supportedToken.approve(msg.sender, amount);
             // supportedToken.transferFrom(msg.sender, address(this), 1);
             // supportedToken.allowance(msg.sender, address(this));
-
-            uint256 allowance = supportedToken.allowance(msg.sender, address(this));
-            require(allowance >= amount, "Reserve: Check the token allowance");
             supportedToken.transferFrom(msg.sender, address(this), amount);
 
             // send ETH to msg.sender
-            // msg.sender.transfer(msg.value * sellRate);
+            payable(msg.sender).transfer(amount / 6);
         }
     }
 
