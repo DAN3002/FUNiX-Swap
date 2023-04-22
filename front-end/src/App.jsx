@@ -3,10 +3,11 @@ import { useState } from 'react';
 
 import TransferTokenModal from './components/TransferTokenModal';
 import SwapTokenModal from './components/SwapTokenModal';
+import BalanceModal from './components/BalanceModal';
 import ImportAccount from './components/ImportAccount';
 
 function App() {
-	const [isSwapActive, setIsSwapActive] = useState(true);
+	const [tabName, setTabName] = useState('swap');
 
 	return (
 		<div className="container">
@@ -16,25 +17,35 @@ function App() {
 					<div className="tab">
 						<div
 							className={`tab__item ${
-								isSwapActive ? 'tab__item--active' : ''
+								tabName === 'swap' ? 'tab__item--active' : ''
 							}`}
-							onClick={() => setIsSwapActive(true)}
+							onClick={() => setTabName('swap')}
 						>
 							SWAP
 						</div>
 						<div
 							className={`tab__item ${
-								!isSwapActive ? 'tab__item--active' : ''
+								tabName === 'transfer' ? 'tab__item--active' : ''
 							}`}
-							onClick={() => setIsSwapActive(false)}
+							onClick={() => setTabName('transfer')}
 						>
 							TRANSFER
+						</div>
+						<div
+							className={`tab__item ${
+								tabName === 'balance' ? 'tab__item--active' : ''
+							}`}
+							onClick={() => setTabName('balance')}
+						>
+							BALANCE
 						</div>
 					</div>
 				</div>
 
 				<div className="main-panel">
-					{isSwapActive ? <SwapTokenModal /> : <TransferTokenModal />}
+					{tabName === 'swap' && <SwapTokenModal />}
+					{tabName === 'transfer' && <TransferTokenModal />}
+					{tabName === 'balance' && <BalanceModal />}
 				</div>
 				<ImportAccount />
 			</div>
