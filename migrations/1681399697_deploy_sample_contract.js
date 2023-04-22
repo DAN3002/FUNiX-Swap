@@ -16,28 +16,28 @@ module.exports = async function (deployer, network, accounts) {
 		from: accounts[0]
 	});
 
-	console.log("===== Init =====");
-	console.log("Balance of account 1: ", web3.utils.fromWei(await tokenA.balanceOf(accounts[1]), 'ether') + " TKA");
-	console.log("Balance of account 1: ", web3.utils.fromWei(await web3.eth.getBalance(accounts[1]), 'ether') + " ETH");
+	// console.log("===== Init =====");
+	// console.log("Balance of account 1: ", web3.utils.fromWei(await tokenA.balanceOf(accounts[1]), 'ether') + " TKA");
+	// console.log("Balance of account 1: ", web3.utils.fromWei(await web3.eth.getBalance(accounts[1]), 'ether') + " ETH");
 
-	console.log("===== Buy =====");
-	const buyAmount = web3.utils.toWei("1", "ether");
-	await reserveA.buyToken({
-		from: accounts[1],
-		value: buyAmount
-	});
+	// console.log("===== Buy =====");
+	// const buyAmount = web3.utils.toWei("1", "ether");
+	// await reserveA.buyToken({
+	// 	from: accounts[1],
+	// 	value: buyAmount
+	// });
 
-	console.log("Balance of account 1: ", web3.utils.fromWei(await tokenA.balanceOf(accounts[1]), 'ether') + " TKA");
-	console.log("Balance of account 1: ", web3.utils.fromWei(await web3.eth.getBalance(accounts[1]), 'ether') + " ETH");
+	// console.log("Balance of account 1: ", web3.utils.fromWei(await tokenA.balanceOf(accounts[1]), 'ether') + " TKA");
+	// console.log("Balance of account 1: ", web3.utils.fromWei(await web3.eth.getBalance(accounts[1]), 'ether') + " ETH");
 
-	console.log("===== Sell =====");
-	const sellAmount = web3.utils.toWei("100", "ether");
-	await tokenA.approve(reserveA.address, sellAmount, {
-		from: accounts[1]
-	});
-	await reserveA.sellToken(sellAmount, {
-		from: accounts[1]
-	});
-	console.log("Balance of account 1: ", web3.utils.fromWei(await tokenA.balanceOf(accounts[1]), 'ether') + " TKA");
-	console.log("Balance of account 1: ", web3.utils.fromWei(await web3.eth.getBalance(accounts[1]), 'ether') + " ETH");
+	// console.log("===== Sell =====");
+	// const sellAmount = web3.utils.toWei("100", "ether");
+	// await tokenA.approve(reserveA.address, sellAmount, {
+	// 	from: accounts[1]
+	// });
+	// await reserveA.sellToken(sellAmount, {
+	// 	from: accounts[1]
+	// });
+	// console.log("Balance of account 1: ", web3.utils.fromWei(await tokenA.balanceOf(accounts[1]), 'ether') + " TKA");
+	// console.log("Balance of account 1: ", web3.utils.fromWei(await web3.eth.getBalance(accounts[1]), 'ether') + " ETH");
 };

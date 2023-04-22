@@ -39,7 +39,7 @@ contract Reserve {
         sellRate = _sellRate;
     }
 
-    function buyToken() public payable {
+    function buyToken() public payable returns (uint256 sendBackAmount){
         /*
             Buy supportedToken with ETH
             => Contract recieves ETH and sends supportedToken
@@ -51,9 +51,11 @@ contract Reserve {
 
         // supportedToken.approve(msg.sender, tokenAmount);
         supportedToken.transfer(msg.sender, tokenAmount);
+
+        return tokenAmount;
     }
 
-    function sellToken(uint256 sellAmount) public {
+    function sellToken(uint256 sellAmount) public returns (uint256 sendBackAmount){
         /*
             Sell supportedToken for ETH
             => Contract recieves supportedToken and sends ETH
@@ -67,6 +69,8 @@ contract Reserve {
 
         supportedToken.transferFrom(msg.sender, address(this), sellAmount);
         payable(msg.sender).transfer(ethAmount);
+
+        return ethAmount;
     }
 
     // Check balance supportedToken of account

@@ -22,22 +22,24 @@ contract Exchange {
 	}
 
 	function exchange(address srcToken, address destToken, uint256 amount) public payable {
-		// require(reserves[srcToken] != address(0), "Reserve for srcToken not found");
-		// require(reserves[destToken] != address(0), "Reserve for destToken not found");
-		// require(srcToken != destToken, "srcToken and destToken must be different");
+		Reserve srcReserve = reserves[srcToken];
+		Reserve destReserve = reserves[destToken];
 
-		// require(amount > 0, "Amount must be greater than 0");
+		require(srcToken != destToken, "srcToken and destToken must be different");
+		require(amount > 0, "Amount must be greater than 0");
 
-		// Reserve srcReserve = reserves[srcToken];
-		// Reserve destReserve = reserves[destToken];
+		if (srcToken == ETH_ADDRESS) {
+			// Swap ETH for destToken
+			require(msg.value == amount, "Amount must be equal to msg.value");
+			require(destReserve != address(0), "destReserve does not exist");
 
-		// if (srcToken == ETH_ADDRESS) {
-		// 	// Swap ETH for destToken
-		// 	require(msg.value == amount, "Amount must be equal to msg.value");
+			ERC20 destTokenContract = ERC20(destToken);
 
-		// 	// Send ETH to srcReserve
-		// 	srcReserve.buyToken{value: amount}();
+			// Send ETH to srcReserve and get destToken to Exchange
+			uint256 sendBackAmount =  srcReserve.buyToken{value: amount}();
 
-		// }
+			// send token from the Exchange to the user
+			destTokenContract.transferFrom(address(this), msg.sender, sendBackAmount);
+		}
 	}
 }
