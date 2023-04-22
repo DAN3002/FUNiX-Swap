@@ -19,22 +19,52 @@ contract Reserve {
         sellRate = _sellRate;
     }
 
+    modifier onlyOwner() {
+        require(msg.sender == owner(), "Only owner can call this function");
+        _;
+    }
+
+    function setBuyRate(uint256 _buyRate) public onlyOwner {
+        buyRate = _buyRate;
+    }
+
+    function setSellRate(uint256 _sellRate) public onlyOwner {
+        sellRate = _sellRate;
+    }
+
+    function setRates(uint256 _buyRate, uint256 _sellRate) public onlyOwner {
+        buyRate = _buyRate;
+        sellRate = _sellRate;
+    }
+
     function buyToken() public payable {
         /*
             Buy supportedToken with ETH
             => Contract recieves ETH and sends supportedToken
         */
-        supportedToken.approve(msg.sender, msg.value * buyRate);
-        supportedToken.transfer(msg.sender, msg.value * buyRate);
+        require(msg.value > 0, "You must send ETH to buy tokens");
+
+        uint256 tokenAmount = msg.value * buyRate;
+        require(supportedToken.balanceOf(address(this)) >= tokenAmount, "Not enough token in the reserve");
+
+        supportedToken.approve(msg.sender, tokenAmount);
+        supportedToken.transfer(msg.sender, tokenAmount);
     }
 
-    function sellToken (uint256 amount) public {
+    function sellToken(uint256 sellAmount) public {
         /*
             Sell supportedToken for ETH
             => Contract recieves supportedToken and sends ETH
         */
-        supportedToken.transferFrom(msg.sender, address(this), amount);
-        payable(msg.sender).transfer(amount / sellRate);
+       uint256 ethAmount = sellAmount / sellRate;
+
+        require(sellAmount > 0, "You must sell at least some token");
+        require(supportedToken.balanceOf(msg.sender) >= sellAmount, "Not enough token in your account");
+        require(supportedToken.allowance(msg.sender, address(this)) >= sellAmount, "Not enough allowance for this contract");
+        require(address(this).balance >= ethAmount, "Not enough ETH in the reserve");
+
+        supportedToken.transferFrom(msg.sender, address(this), sellAmount);
+        payable(msg.sender).transfer(ethAmount);
     }
 
     // Check balance supportedToken of account
