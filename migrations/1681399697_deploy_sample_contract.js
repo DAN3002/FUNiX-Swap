@@ -31,7 +31,7 @@ module.exports = async function (deployer, network, accounts) {
 	console.log("Balance of account 1: ", web3.utils.fromWei(await web3.eth.getBalance(accounts[1]), 'ether') + " ETH");
 
 	console.log("===== Sell =====");
-	const sellAmount = web3.utils.toWei("1", "ether");
+	const sellAmount = web3.utils.toWei("100", "ether");
 	await tokenA.approve(reserveA.address, sellAmount, {
 		from: accounts[1]
 	});

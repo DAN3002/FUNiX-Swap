@@ -25,8 +25,6 @@ contract Reserve {
 				Buy supportedToken with ETH
 				=> Contract recieves ETH and sends supportedToken
 			 */
-            // send supportedToken to msg.sender
-			// get address of msg.sender
             supportedToken.approve(msg.sender, amount * buyRate);
             supportedToken.transfer(msg.sender, amount * buyRate);
         } else {
@@ -34,16 +32,8 @@ contract Reserve {
 				Sell supportedToken for ETH
 				=> Contract recieves supportedToken and sends ETH
 			 */
-            // send supportedToken to this contract
-            // supportedToken.approve(msg.sender, amount);
-            // require(amount > 0, "amount must be greater than 0");
-            // supportedToken.approve(msg.sender, amount);
-            // supportedToken.transferFrom(msg.sender, address(this), 1);
-            // supportedToken.allowance(msg.sender, address(this));
             supportedToken.transferFrom(msg.sender, address(this), amount);
-
-            // send ETH to msg.sender
-            payable(msg.sender).transfer(amount / 6);
+            payable(msg.sender).transfer(amount / sellRate);
         }
     }
 
