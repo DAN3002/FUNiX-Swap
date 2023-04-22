@@ -47,7 +47,7 @@ contract Reserve {
         uint256 tokenAmount = msg.value * buyRate;
         require(supportedToken.balanceOf(address(this)) >= tokenAmount, "Not enough token in the reserve");
 
-        supportedToken.approve(msg.sender, tokenAmount);
+        // supportedToken.approve(msg.sender, tokenAmount);
         supportedToken.transfer(msg.sender, tokenAmount);
     }
 
