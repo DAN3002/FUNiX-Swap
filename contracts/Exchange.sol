@@ -36,10 +36,14 @@ contract Exchange {
 			ERC20 destTokenContract = ERC20(destToken);
 
 			// Send ETH to srcReserve and get destToken to Exchange
-			uint256 sendBackAmount =  srcReserve.buyToken{value: amount}();
+			uint256 sendBackAmount = destReserve.buyToken{value: amount}();
 
 			// send token from the Exchange to the user
-			destTokenContract.transferFrom(address(this), msg.sender, sendBackAmount);
+			destTokenContract.transfer(msg.sender, sendBackAmount);
 		}
+	}
+
+	function getReserve(address token) public view returns (address) {
+		return address(reserves[token]);
 	}
 }

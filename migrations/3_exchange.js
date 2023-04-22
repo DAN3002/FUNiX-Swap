@@ -28,6 +28,13 @@ module.exports = async function (deployer, network, accounts) {
 	const exchangeContract = await Exchange.new({
 		gas: gasLimit
 	});
+
+	// Add Reserve to Exchange
+	await exchangeContract.addReserve(reserveA.address, tokenA.address);
+	await exchangeContract.addReserve(reserveB.address, tokenB.address);
+
+	// Test getReserve
+	// console.log(await exchangeContract.getReserve(tokenA.address));
 	
 	const printAccountInfo = async () => {
 		console.log("Balance of account 1: ", web3.utils.fromWei(await tokenA.balanceOf(accounts[1]), 'ether') + " TKA");
@@ -36,7 +43,7 @@ module.exports = async function (deployer, network, accounts) {
 	}
 	
 	console.log("===== Exchange =====");
-	printAccountInfo();
+	await printAccountInfo();
 
 	console.log("===== ETH to TKA =====");
 	let amount = web3.utils.toWei("1", "ether");
@@ -44,5 +51,5 @@ module.exports = async function (deployer, network, accounts) {
 		from: accounts[1],
 		value: amount
 	});
-	printAccountInfo();
+	await printAccountInfo();
 };
