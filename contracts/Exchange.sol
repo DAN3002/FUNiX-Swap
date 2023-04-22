@@ -31,7 +31,7 @@ contract Exchange {
 		if (srcToken == ETH_ADDRESS) {
 			// Swap ETH for destToken
 			require(msg.value == amount, "Amount must be equal to msg.value");
-			require(destReserve != address(0), "destReserve does not exist");
+			// require(destReserve != address(0), "destReserve does not exist");
 
 			ERC20 destTokenContract = ERC20(destToken);
 
