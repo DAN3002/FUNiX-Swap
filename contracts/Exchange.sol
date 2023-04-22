@@ -85,6 +85,16 @@ contract Exchange {
 	function getReserve(address token) public view returns (address) {
 		return address(reserves[token]);
 	}
+
+	function getExchangeRate(address srcToken, address destToken) public view returns (uint256) {
+		if (srcToken == ETH_ADDRESS) {
+			return reserves[destToken].getBuyRate();
+		} else if (destToken == ETH_ADDRESS) {
+			return reserves[srcToken].sellRate();
+		} else {
+			return reserves[srcToken].sellRate() / reserves[destToken].buyRate();
+		}
+	}
 	
     receive() external payable {}
 }

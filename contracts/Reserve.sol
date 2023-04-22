@@ -5,10 +5,10 @@ import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 contract Reserve {
     ERC20 public supportedToken;
     // 1 ETH = buyRate supportedToken
-    uint256 public buyRate;
+    uint256 buyRate;
     // 1 supportedToken = sellRate ETH
-    uint256 public sellRate;
-    address public owner;
+    uint256 sellRate;
+    address owner;
 
     constructor(
         address _supportedToken,
@@ -19,11 +19,6 @@ contract Reserve {
         buyRate = _buyRate;
         sellRate = _sellRate;
         owner = msg.sender;
-    }
-
-    modifier onlyOwner() {
-        require(msg.sender == owner, "Only owner can call this function");
-        _;
     }
 
     function setBuyRate(uint256 _buyRate) public onlyOwner {
@@ -76,5 +71,18 @@ contract Reserve {
     // Check balance supportedToken of account
     function balanceOf(address account) public view returns (uint256) {
         return supportedToken.balanceOf(account);
+    }
+
+    function getBuyRate() public view returns (uint256) {
+        return buyRate;
+    }
+
+    function getSellRate() public view returns (uint256) {
+        return sellRate;
+    }
+
+    modifier onlyOwner() {
+        require(msg.sender == owner, "Only owner can call this function");
+        _;
     }
 }
