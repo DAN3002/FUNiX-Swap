@@ -57,6 +57,28 @@ contract Exchange {
 
 			// send ETH from the Exchange to the user
 			payable(msg.sender).transfer(sendBackAmount);
+		} else {
+			// Swap srcToken for destToken
+			// require(srcReserve != address(0), "srcReserve does not exist");
+			// require(destReserve != address(0), "destReserve does not exist");
+
+			ERC20 srcTokenContract = ERC20(srcToken);
+			ERC20 destTokenContract = ERC20(destToken);
+
+			// recive token from sender
+			srcTokenContract.transferFrom(msg.sender, address(this), amount);
+
+			// approve srcReserve to spend token
+			srcTokenContract.approve(address(srcReserve), amount);
+
+			// Send token to srcReserve and get destToken to Exchange
+			uint256 ethRecived = srcReserve.sellToken(amount);
+
+			// buy destToken with ETH
+			uint256 sendBackAmount = destReserve.buyToken{value: ethRecived}();
+
+			// send token from the Exchange to the user
+			destTokenContract.transfer(msg.sender, sendBackAmount);
 		}
 	}
 

@@ -53,15 +53,25 @@ module.exports = async function (deployer, network, accounts) {
 	});
 	await printAccountInfo();
 
-	console.log("===== TKA to ETH =====");
-	amount = web3.utils.toWei("100", "ether");
+	// console.log("===== TKA to ETH =====");
+	// amount = web3.utils.toWei("100", "ether");
+	// await tokenA.approve(exchangeContract.address, amount, {
+	// 	from: accounts[1]
+	// });
+	// await exchangeContract.exchange(tokenA.address, ETH_ADDRESS, amount, {
+	// 	from: accounts[1],
+	// 	gasLimit: 2206142
+	// });
+
+	console.log("===== TKA to TKB =====");
+	amount = web3.utils.toWei("50", "ether");
 	await tokenA.approve(exchangeContract.address, amount, {
 		from: accounts[1]
 	});
-	await exchangeContract.exchange(tokenA.address, ETH_ADDRESS, amount, {
+	await exchangeContract.exchange(tokenA.address, tokenB.address, amount, {
 		from: accounts[1],
-		gasLimit: 2206142
 	});
+
 
 	await printAccountInfo();
 };
