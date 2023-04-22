@@ -22,7 +22,7 @@ module.exports = async function (deployer, network, accounts) {
 
 	console.log("===== Buy =====");
 	const buyAmount = web3.utils.toWei("1", "ether");
-	await reserveA.exchange(true, buyAmount, {
+	await reserveA.buyToken({
 		from: accounts[1],
 		value: buyAmount
 	});
@@ -35,7 +35,7 @@ module.exports = async function (deployer, network, accounts) {
 	await tokenA.approve(reserveA.address, sellAmount, {
 		from: accounts[1]
 	});
-	await reserveA.exchange(false, sellAmount, {
+	await reserveA.sellToken(sellAmount, {
 		from: accounts[1]
 	});
 	console.log("Balance of account 1: ", web3.utils.fromWei(await tokenA.balanceOf(accounts[1]), 'ether') + " TKA");

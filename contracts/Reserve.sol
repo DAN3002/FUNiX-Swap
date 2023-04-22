@@ -19,22 +19,22 @@ contract Reserve {
         sellRate = _sellRate;
     }
 
-    function exchange(bool isBuy, uint256 amount) public payable {
-        if (isBuy) {
-            /*
-				Buy supportedToken with ETH
-				=> Contract recieves ETH and sends supportedToken
-			 */
-            supportedToken.approve(msg.sender, amount * buyRate);
-            supportedToken.transfer(msg.sender, amount * buyRate);
-        } else {
-            /*
-				Sell supportedToken for ETH
-				=> Contract recieves supportedToken and sends ETH
-			 */
-            supportedToken.transferFrom(msg.sender, address(this), amount);
-            payable(msg.sender).transfer(amount / sellRate);
-        }
+    function buyToken() public payable {
+        /*
+            Buy supportedToken with ETH
+            => Contract recieves ETH and sends supportedToken
+        */
+        supportedToken.approve(msg.sender, msg.value * buyRate);
+        supportedToken.transfer(msg.sender, msg.value * buyRate);
+    }
+
+    function sellToken (uint256 amount) public {
+        /*
+            Sell supportedToken for ETH
+            => Contract recieves supportedToken and sends ETH
+        */
+        supportedToken.transferFrom(msg.sender, address(this), amount);
+        payable(msg.sender).transfer(amount / sellRate);
     }
 
     // Check balance supportedToken of account
