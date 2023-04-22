@@ -60,7 +60,7 @@ contract Reserve {
             Sell supportedToken for ETH
             => Contract recieves supportedToken and sends ETH
         */
-       uint256 ethAmount = sellAmount / sellRate;
+        uint256 ethAmount = sellAmount / sellRate;
 
         require(sellAmount > 0, "You must sell at least some token");
         require(supportedToken.balanceOf(msg.sender) >= sellAmount, "Not enough token in your account");
@@ -68,7 +68,7 @@ contract Reserve {
         require(address(this).balance >= ethAmount, "Not enough ETH in the reserve");
 
         supportedToken.transferFrom(msg.sender, address(this), sellAmount);
-        payable(msg.sender).transfer(ethAmount);
+        payable(msg.sender).transfer(ethAmount);    
 
         return ethAmount;
     }

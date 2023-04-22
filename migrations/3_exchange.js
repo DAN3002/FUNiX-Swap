@@ -52,4 +52,16 @@ module.exports = async function (deployer, network, accounts) {
 		value: amount
 	});
 	await printAccountInfo();
+
+	console.log("===== TKA to ETH =====");
+	amount = web3.utils.toWei("100", "ether");
+	await tokenA.approve(exchangeContract.address, amount, {
+		from: accounts[1]
+	});
+	await exchangeContract.exchange(tokenA.address, ETH_ADDRESS, amount, {
+		from: accounts[1],
+		gasLimit: 2206142
+	});
+
+	await printAccountInfo();
 };
