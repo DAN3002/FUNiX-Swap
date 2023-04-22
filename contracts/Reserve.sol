@@ -8,6 +8,7 @@ contract Reserve {
     uint256 public buyRate;
     // 1 supportedToken = sellRate ETH
     uint256 public sellRate;
+    address public owner;
 
     constructor(
         address _supportedToken,
@@ -17,10 +18,11 @@ contract Reserve {
         supportedToken = ERC20(_supportedToken);
         buyRate = _buyRate;
         sellRate = _sellRate;
+        owner = msg.sender;
     }
 
     modifier onlyOwner() {
-        require(msg.sender == owner(), "Only owner can call this function");
+        require(msg.sender == owner, "Only owner can call this function");
         _;
     }
 
