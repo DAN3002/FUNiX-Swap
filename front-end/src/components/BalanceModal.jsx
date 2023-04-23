@@ -2,7 +2,7 @@
 import { useState, useEffect } from 'react';
 
 import MetaMask from '../services/MetaMask';
-import { TOKEN_LIST } from '../config';
+import { TOKENS } from '../config';
 
 function BalanceModal() {
 	const [walletAddress, setWalletAddress] = useState();
@@ -11,7 +11,7 @@ function BalanceModal() {
 
 	useEffect(() => {
 		setWalletAddress(MetaMask.getWalletAddress());
-		setToken(TOKEN_LIST[0]);
+		setToken(TOKENS[0].symbol);
 		setBalance(100);
 	}, []);
 
@@ -49,8 +49,8 @@ function BalanceModal() {
 						</label>
 						<div className="input-group">
 							<datalist id="token-list">
-								{TOKEN_LIST.map((tokenName) => (
-									<option value={tokenName} key={tokenName} />
+								{TOKENS.map((tokenName) => (
+									<option value={tokenName.symbol} key={tokenName.symbol} />
 								))}
 							</datalist>
 							<input
