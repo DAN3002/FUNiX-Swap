@@ -1,11 +1,24 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 import { TOKENS } from '../config';
+import Exchange from '../services/contracts/Exchange';
 
 function SwapTokenModal() {
 	const [sourceToken, setSourceToken] = useState(TOKENS[0]);
 	const [destToken, setDestToken] = useState(TOKENS[1]);
 	const [sourceAmount, setSourceAmount] = useState();
+	const [destAmount, setDestAmount] = useState();
+	const [rate, setRate] = useState();
+
+	useEffect(() => {
+		const getRate = async () => {
+			const rateValue = await Exchange.getExchangeRate(sourceToken.address, destToken.address, sourceAmount);
+			setRate(rateValue);
+			setDestAmount((sourceAmount || 0) * parseFloat(rateValue));
+		};
+
+		getRate();
+	}, [sourceToken, destToken, sourceAmount]);
 
 	return (
 		<div className="swap active" id="swap">
@@ -52,9 +65,9 @@ function SwapTokenModal() {
 							))}
 						</select>
 					</div>
-					<div className="input-placeholder">0</div>
+					<div className="input-placeholder">{destAmount}</div>
 				</div>
-				<div className="swap__rate">1 KNC = 0.001047 ETH</div>
+				<div className="swap__rate">{`1 ${sourceToken.symbol} = ${rate} ${destToken.symbol}`}</div>
 			</div>
 			<div
 				className="button modal-trigger"
