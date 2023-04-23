@@ -5,6 +5,9 @@ const modal = {
 		return Swal.fire({
 			title: 'Confirm Swap',
 			html: `
+				<div>
+					<p>Are you sure you want to swap?</p>
+				</div>
 				<div class="modal__token">
 					<div class="src-swap">1 TOMO</div>
 					<img src="/assets/images/icons/arrow-right.svg" alt="">
@@ -17,6 +20,7 @@ const modal = {
 			showCancelButton: true,
 			allowOutsideClick: false,
 			confirmButtonText: 'Confirm',
+			width: 750,
 		});
 	},
 };
