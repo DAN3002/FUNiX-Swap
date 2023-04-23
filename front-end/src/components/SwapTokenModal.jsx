@@ -4,6 +4,22 @@ import { TOKENS } from '../config';
 import Exchange from '../services/contracts/Exchange';
 import modal from '../utils/modal';
 
+const validateSwapInfo = (swapInfo) => {
+	const { sourceToken, destToken, sourceAmount } = swapInfo;
+
+	// check if too token are the same
+	if (sourceToken.symbol === destToken.symbol) {
+		return 'Source token and destination token must be different';
+	}
+
+	// check if source amount is valid
+	if (!sourceAmount || sourceAmount <= 0) {
+		return 'Source amount must be greater than 0';
+	}
+
+	return null;
+};
+
 function SwapTokenModal() {
 	const [sourceToken, setSourceToken] = useState(TOKENS[0]);
 	const [destToken, setDestToken] = useState(TOKENS[1]);
@@ -22,7 +38,22 @@ function SwapTokenModal() {
 	}, [sourceToken, destToken, sourceAmount]);
 
 	const handleSwap = async () => {
-		modal.showConfirmSwap();
+		const swapInfo = {
+			sourceToken,
+			destToken,
+			sourceAmount,
+			destAmount,
+			rate,
+		};
+
+		const validate = validateSwapInfo(swapInfo);
+
+		if (validate) {
+			modal.showAlert(validate);
+			return;
+		}
+
+		modal.showConfirmSwap(swapInfo);
 	};
 
 	return (
