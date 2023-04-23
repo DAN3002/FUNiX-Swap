@@ -90,9 +90,9 @@ contract Exchange {
 		if (srcToken == ETH_ADDRESS) {
 			return reserves[destToken].getBuyRate();
 		} else if (destToken == ETH_ADDRESS) {
-			return reserves[srcToken].sellRate();
+			return reserves[srcToken].getSellRate();
 		} else {
-			return reserves[srcToken].sellRate() / reserves[destToken].buyRate();
+			return reserves[srcToken].getSellRate() / reserves[destToken].getBuyRate();
 		}
 	}
 	
