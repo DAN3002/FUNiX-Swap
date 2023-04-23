@@ -314,3 +314,8 @@ input {
 .main-panel {
 	padding-bottom: 45px;
 }
+
+#token-list option {
+	background: #29315b;
+	color: #caccd9;
+}

@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 /* eslint-disable jsx-a11y/control-has-associated-label */
 import { useState, useEffect } from 'react';
 
@@ -48,20 +49,23 @@ function BalanceModal() {
 							Token:
 						</label>
 						<div className="input-group">
-							<datalist id="token-list">
-								{TOKENS.map((tokenName) => (
-									<option value={tokenName.symbol} key={tokenName.symbol} />
-								))}
-							</datalist>
-							<input
+							<select
+								id="token-list"
 								className="input-item"
-								type="text"
-								id="wallet-token"
-								name="wallet-token"
-								autoComplete="on"
-								list="token-list"
-								value={token.symbol}
-							/>
+								onChange={(e) => {
+									setToken(TOKENS[e.target.value]);
+								}}
+							>
+								{TOKENS.map((tokenEl, i) => (
+									<option
+										value={i}
+										key={tokenEl.symbol}
+										selected={tokenEl.symbol === token.symbol}
+									>
+										{`${tokenEl.symbol} - ${tokenEl.name}`}
+									</option>
+								))}
+							</select>
 						</div>
 					</div>
 					<div className="input-container--mt">
