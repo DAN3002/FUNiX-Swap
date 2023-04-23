@@ -25,6 +25,6 @@ export default {
 		const tokenContract = getTokenContract(token.address);
 
 		const balance = await tokenContract.methods.balanceOf(window.ethereum.selectedAddress).call();
-		return balance;
+		return window.web3.fromWei(balance, 'ether');
 	},
 };
