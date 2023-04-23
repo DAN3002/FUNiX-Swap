@@ -7,22 +7,32 @@ import { TOKENS } from '../config';
 
 function BalanceModal() {
 	const [walletAddress, setWalletAddress] = useState();
-	const [token, setToken] = useState('');
+	const [token, setToken] = useState({});
 	const [balance, setBalance] = useState(0);
+
+	const fetchBalance = async () => {
+		if (token) {
+			// console.log('token', token);
+			setBalance(await MetaMask.getCurrentBalanceByToken(token));
+		}
+	};
 
 	useEffect(() => {
 		setWalletAddress(MetaMask.getWalletAddress());
-		setToken(TOKENS[1]);
+		setToken(TOKENS[0]);
 		setBalance(100);
+
+		const inter = setInterval(() => {
+			fetchBalance();
+		}, 1 * 1000);
+
+		return () => {
+			clearInterval(inter);
+		};
 	}, []);
 
 	useEffect(() => {
-		const fetchBalance = async () => {
-			setBalance(await MetaMask.getCurrentBalanceByToken(token));
-		};
-		if (token) {
-			fetchBalance();
-		}
+		fetchBalance();
 	}, [token]);
 
 	return (

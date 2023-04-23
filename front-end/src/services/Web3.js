@@ -14,5 +14,8 @@ export const getWeb3Instance = () => {
 
 export const getTokenContract = (tokenAddress) => {
 	const web3 = getWeb3Instance();
-	return new web3.eth.Contract(TOKEN_ABI, tokenAddress);
+	const Contract = new web3.eth.Contract(TOKEN_ABI, tokenAddress);
+	Contract.options.address = tokenAddress;
+
+	return Contract;
 };

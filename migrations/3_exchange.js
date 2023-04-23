@@ -6,7 +6,6 @@ const gasLimit = 2206142;
 const ETH_ADDRESS = "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee";
 
 module.exports = async function (deployer, network, accounts) {
-	// Use deployer to state migration tasks.
 	// const tokenA = await Token.new("TokenA", "TKA", 18);
 	// const tokenB = await Token.new("TokenB", "TKB", 18);
 	// const reserveA = await Reserve.new(tokenA.address, 100, 100, {
