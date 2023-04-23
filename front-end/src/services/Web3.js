@@ -29,3 +29,8 @@ export const getExchangeContract = () => {
 
 	return Contract;
 };
+
+export const convertToWei = (amount) => {
+	const web3 = getWeb3Instance();
+	return web3.utils.toWei(amount, 'ether');
+};
