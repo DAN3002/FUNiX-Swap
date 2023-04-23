@@ -1,5 +1,30 @@
 /* eslint-disable jsx-a11y/control-has-associated-label */
+import { useState, useEffect } from 'react';
+
+import MetaMask from '../services/MetaMask';
+import { TOKEN_LIST } from '../config';
+
 function BalanceModal() {
+	const [walletAddress, setWalletAddress] = useState();
+	const [token, setToken] = useState('');
+	const [balance, setBalance] = useState(0);
+
+	useEffect(() => {
+		setWalletAddress(MetaMask.getWalletAddress());
+		setToken(TOKEN_LIST[0]);
+		setBalance(100);
+	}, []);
+
+	useEffect(() => {
+		const fetchBalance = async () => {
+			console.log(await MetaMask.getCurrentBalanceByToken(token));
+			// setBalance(await MetaMask.getCurrentBalanceByToken(token));
+		};
+		if (token) {
+			fetchBalance();
+		}
+	}, [token]);
+
 	return (
 		<div className="transfer" id="transfer">
 			<div className="input-container">
@@ -11,13 +36,11 @@ function BalanceModal() {
 						<div className="input-group">
 							<input
 								disabled
-								className="input-item"
+								className="input-item input-item--single"
 								type="text"
 								id="wallet-address"
 								name="wallet-address"
-								defaultValue={
-									0x0000000000000000000000000000000000000000
-								}
+								value={walletAddress}
 							/>
 						</div>
 					</div>
@@ -27,8 +50,9 @@ function BalanceModal() {
 						</label>
 						<div className="input-group">
 							<datalist id="token-list">
-								<option value="TokenA (TKA)" />
-								<option value="TokenC (TKC)" />
+								{TOKEN_LIST.map((tokenName) => (
+									<option value={tokenName} key={tokenName} />
+								))}
 							</datalist>
 							<input
 								className="input-item"
@@ -37,6 +61,7 @@ function BalanceModal() {
 								name="wallet-token"
 								autoComplete="on"
 								list="token-list"
+								value={token}
 							/>
 						</div>
 					</div>
@@ -47,11 +72,10 @@ function BalanceModal() {
 						<div className="input-group">
 							<input
 								disabled
-								className="input-item"
+								className="input-item input-item--single"
 								type="number"
 								id="wallet-balance"
-								placeholder={1}
-								defaultValue={1}
+								value={balance}
 							/>
 						</div>
 					</div>
