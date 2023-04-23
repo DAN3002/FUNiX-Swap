@@ -53,7 +53,10 @@ function SwapTokenModal() {
 			return;
 		}
 
-		modal.showConfirmSwap(swapInfo);
+		const res = await modal.showConfirmSwap(swapInfo);
+		if (res.isConfirmed) {
+			Exchange.swapToken(swapInfo);
+		}
 	};
 
 	return (

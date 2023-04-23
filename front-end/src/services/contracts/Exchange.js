@@ -17,9 +17,9 @@ const Exchange = {
 		} = swapInfo;
 
 		const sourceAmountInWei = convertToWei(sourceAmount);
-		let transtionAmout = 0;
+		let transactionAmout = 0;
 		if (sourceToken.address === NATIVE_TOKEN.address) {
-			transtionAmout = sourceAmountInWei;
+			transactionAmout = sourceAmountInWei;
 		} else {
 			// Approve exchangeContract to spend sourceToken
 			const sourceTokenContract = getTokenContract(sourceToken.address);
@@ -38,7 +38,7 @@ const Exchange = {
 			sourceAmount,
 		).send({
 			from: MetaMask.getWalletAddress(),
-			value: transtionAmout,
+			value: transactionAmout,
 		});
 	},
 };
