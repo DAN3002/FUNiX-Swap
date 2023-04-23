@@ -21,7 +21,6 @@
 	"homepage": "https://github.com/DAN3002/FUNiX-Swap#readme",
 	"dependencies": {
 		"@openzeppelin/contracts": "^4.8.3",
-		"@remix-project/remixd": "^0.6.13",
-		"web3": "^1.9.0"
+		"@remix-project/remixd": "^0.6.13"
 	}
 }

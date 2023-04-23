@@ -8,7 +8,7 @@ export const EXCHANGE_ADDRESS = '0xFaA0991f37bfBE099c9E0C682956c5DFb2FC9FCF';
 export const TOKENS = [{
 	name: 'Ether',
 	symbol: 'ETH',
-	address: '0x0000000000000000000000000000000000000000',
+	address: '0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE',
 },
 {
 	name: 'Token A',
@@ -18,6 +18,5 @@ export const TOKENS = [{
 {
 	name: 'Token B',
 	symbol: 'TKB',
-	address: '0x5111031586BD3ED0177C11F5A58981b012b30424',
-},
-];
+	address: '0xa3Ec437acEC6B2eCd48f7891d90D059D59a72C5F',
+}];

@@ -1,3 +1,5 @@
+import { getTokenContract } from './Web3';
+
 export default {
 	isInstalled: () => {
 		return typeof window.ethereum !== 'undefined';
@@ -11,7 +13,7 @@ export default {
 		return window.ethereum.selectedAddress;
 	},
 	getCurrentBalanceByToken: async (token) => {
-		if (token === 'ETH') {
+		if (token.symbol === 'ETH') {
 			const balance = await window.ethereum.request({
 				method: 'eth_getBalance',
 				params: [window.ethereum.selectedAddress, 'latest'],
@@ -20,6 +22,9 @@ export default {
 			// convert to ether
 			return window.web3.fromWei(balance, 'ether');
 		}
-		return 1000;
+		const tokenContract = getTokenContract(token.address);
+
+		const balance = await tokenContract.methods.balanceOf(window.ethereum.selectedAddress).call();
+		return balance;
 	},
 };

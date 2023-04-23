@@ -11,7 +11,7 @@ function BalanceModal() {
 
 	useEffect(() => {
 		setWalletAddress(MetaMask.getWalletAddress());
-		setToken(TOKENS[0].symbol);
+		setToken(TOKENS[1]);
 		setBalance(100);
 	}, []);
 
@@ -60,7 +60,7 @@ function BalanceModal() {
 								name="wallet-token"
 								autoComplete="on"
 								list="token-list"
-								value={token}
+								value={token.symbol}
 							/>
 						</div>
 					</div>
