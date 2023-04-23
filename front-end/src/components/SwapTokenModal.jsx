@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 
 import { TOKENS } from '../config';
 import Exchange from '../services/contracts/Exchange';
+import modal from '../utils/modal';
 
 function SwapTokenModal() {
 	const [sourceToken, setSourceToken] = useState(TOKENS[0]);
@@ -19,6 +20,10 @@ function SwapTokenModal() {
 
 		getRate();
 	}, [sourceToken, destToken, sourceAmount]);
+
+	const handleSwap = async () => {
+		modal.showConfirmSwap();
+	};
 
 	return (
 		<div className="swap active" id="swap">
@@ -73,6 +78,7 @@ function SwapTokenModal() {
 				className="button modal-trigger"
 				data-modal-id="confirm-swap-modal"
 				id="swap-button"
+				onClick={handleSwap}
 			>
 				Swap Now
 			</div>

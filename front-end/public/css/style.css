@@ -322,14 +322,49 @@ input {
 
 .dropdown select {
 	font-size: 16px;
-    background: #29315b;
-    padding: 5px;
-    border: none;
+	background: #29315b;
+	padding: 5px;
+	border: none;
 	color: #caccd9;
 }
 
-input[type=number]::-webkit-inner-spin-button, 
-input[type=number]::-webkit-outer-spin-button { 
-  -webkit-appearance: none; 
-  margin: 0; 
+input[type='number']::-webkit-inner-spin-button,
+input[type='number']::-webkit-outer-spin-button {
+	-webkit-appearance: none;
+	margin: 0;
+}
+
+.modal__token {
+	color: #252e45;
+	font-size: 18px;
+	font-weight: 500;
+	margin: 20px 0px;
+	background: #e1e1e1;
+	padding: 30px;
+}
+.modal__token > div {
+	float: left;
+}
+.modal__token > div:first-child {
+	width: 30%;
+}
+.modal__token > div:last-child {
+	width: 30%;
+	float: right;
+}
+
+.modal__rate {
+	color: #4a5675;
+	font-size: 14px;
+	font-weight: 500;
+	margin-bottom: 20px;
+	text-align: left;
+}
+
+.modal__fee {
+	color: #4a5675;
+	font-size: 14px;
+	font-weight: 500;
+	margin-bottom: 20px;
+	text-align: left;
 }

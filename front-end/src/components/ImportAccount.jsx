@@ -1,5 +1,4 @@
 import Swal from 'sweetalert2';
-
 import MetaMask from '../services/MetaMask';
 
 function ImportAccount() {
