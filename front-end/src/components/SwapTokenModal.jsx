@@ -1,4 +1,12 @@
+import { useState } from 'react';
+
+import { TOKENS } from '../config';
+
 function SwapTokenModal() {
+	const [sourceToken, setSourceToken] = useState(TOKENS[0]);
+	const [destToken, setDestToken] = useState(TOKENS[1]);
+	const [sourceAmount, setSourceAmount] = useState();
+
 	return (
 		<div className="swap active" id="swap">
 			<div className="input-container">
@@ -7,20 +15,24 @@ function SwapTokenModal() {
 				</label>
 				<div className="input-group">
 					<div className="dropdown">
-						<div className="dropdown__trigger">
-							<span>ETH</span>
-							<div className="dropdown__triangle" />
-						</div>
-						<div className="dropdown__content">
-							<div className="dropdown__item">ETH</div>
-							<div className="dropdown__item">KNC</div>
-						</div>
+						<select
+							className="dropdown__trigger"
+							onChange={(e) => setSourceToken(TOKENS[e.target.value])}
+						>
+							{TOKENS.map((token, i) => (
+								<option key={token.symbol} value={i} selected={token.symbol === sourceToken.symbol}>
+									{token.symbol}
+								</option>
+							))}
+						</select>
 					</div>
 					<input
 						className="input-item"
 						id="swap-source-amount"
-						type="text"
+						type="number"
 						placeholder={0}
+						value={sourceAmount}
+						onChange={(e) => setSourceAmount(e.target.value)}
 					/>
 				</div>
 			</div>
@@ -29,14 +41,16 @@ function SwapTokenModal() {
 				<div className="input-title">To:</div>
 				<div className="input-group">
 					<div className="dropdown">
-						<div className="dropdown__trigger">
-							<span>KNC</span>
-							<div className="dropdown__triangle" />
-						</div>
-						<div className="dropdown__content">
-							<div className="dropdown__item">ETH</div>
-							<div className="dropdown__item">KNC</div>
-						</div>
+						<select
+							className="dropdown__trigger"
+							onChange={(e) => setDestToken(TOKENS[e.target.value])}
+						>
+							{TOKENS.map((token, i) => (
+								<option key={token.symbol} value={i} selected={token.symbol === destToken.symbol}>
+									{token.symbol}
+								</option>
+							))}
+						</select>
 					</div>
 					<div className="input-placeholder">0</div>
 				</div>

@@ -319,3 +319,17 @@ input {
 	background: #29315b;
 	color: #caccd9;
 }
+
+.dropdown select {
+	font-size: 16px;
+    background: #29315b;
+    padding: 5px;
+    border: none;
+	color: #caccd9;
+}
+
+input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button { 
+  -webkit-appearance: none; 
+  margin: 0; 
+}
