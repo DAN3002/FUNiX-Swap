@@ -18,7 +18,7 @@ export default {
 			});
 
 			// convert to ether
-			return balance / 1e9;
+			return window.web3.fromWei(balance, 'ether');
 		}
 		return 1000;
 	},

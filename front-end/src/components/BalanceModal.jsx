@@ -17,8 +17,7 @@ function BalanceModal() {
 
 	useEffect(() => {
 		const fetchBalance = async () => {
-			console.log(await MetaMask.getCurrentBalanceByToken(token));
-			// setBalance(await MetaMask.getCurrentBalanceByToken(token));
+			setBalance(await MetaMask.getCurrentBalanceByToken(token));
 		};
 		if (token) {
 			fetchBalance();
