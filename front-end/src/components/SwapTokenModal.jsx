@@ -56,7 +56,11 @@ function SwapTokenModal() {
 
 		const res = await modal.showConfirmSwap(swapInfo);
 		if (res.isConfirmed) {
-			Exchange.swapToken(swapInfo);
+			await Exchange.swapToken(swapInfo);
+			modal.showSuccess('Swap successfully');
+
+			// reset form
+			setSourceAmount('');
 		}
 	};
 

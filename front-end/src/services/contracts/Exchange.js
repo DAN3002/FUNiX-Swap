@@ -23,7 +23,6 @@ const Exchange = {
 		} else {
 			// Approve exchangeContract to spend sourceToken
 			const sourceTokenContract = getTokenContract(sourceToken.address);
-
 			await sourceTokenContract.methods.approve(
 				EXCHANGE_ADDRESS,
 				sourceAmountInWei,

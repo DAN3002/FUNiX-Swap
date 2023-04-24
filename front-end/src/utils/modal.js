@@ -39,6 +39,14 @@ const modal = {
 			confirmButtonText: 'OK',
 		});
 	},
+	showSuccess: (message) => {
+		return Swal.fire({
+			title: 'Success',
+			text: message,
+			icon: 'success',
+			confirmButtonText: 'OK',
+		});
+	},
 };
 
 export default modal;
