@@ -31,6 +31,31 @@ const modal = {
 			width: 750,
 		});
 	},
+	showConfirmTransfer: (transferInfo) => {
+		const {
+			sourceToken,
+			destAddress,
+			sourceAmount,
+		} = transferInfo;
+
+		return Swal.fire({
+			title: 'Confirm Transfer',
+			html: `
+				<div>
+					<p>Are you sure you want to transfer?</p>
+				</div>
+				<div class="modal__token">
+					<p>${sourceAmount} ${sourceToken.symbol} to <b>${destAddress}</b></p>
+				</div>
+				<!-- <div class="modal__fee">GAS Fee: <span id="gas-amount">0.0001 TOMO</span></div> -->
+			`,
+			icon: 'warning',
+			showCancelButton: true,
+			allowOutsideClick: false,
+			confirmButtonText: 'Confirm',
+			width: 750,
+		});
+	},
 	showAlert: (message) => {
 		return Swal.fire({
 			title: 'Error',

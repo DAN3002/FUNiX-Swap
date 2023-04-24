@@ -16,7 +16,7 @@ const Exchange = {
 			sourceAmount,
 		} = swapInfo;
 
-		const sourceAmountInWei = convertToWei(sourceAmount);
+		const sourceAmountInWei = convertToWei(`${sourceAmount}`);
 		let transactionAmout = 0;
 		if (sourceToken.address === NATIVE_TOKEN.address) {
 			transactionAmout = sourceAmountInWei;

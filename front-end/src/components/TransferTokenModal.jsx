@@ -1,11 +1,50 @@
 import { useState } from 'react';
 
 import { TOKENS } from '../config';
+import modal from '../utils/modal';
+import Token from '../services/contracts/Token';
+
+const validateTransfer = (transferInfo) => {
+	const { destAddress, sourceAmount } = transferInfo;
+
+	// check if source amount is valid
+	if (!sourceAmount || sourceAmount <= 0) {
+		return 'Source amount must be greater than 0';
+	}
+
+	// check if dest address is valid
+	if (!destAddress) {
+		return 'Destination address must be provided';
+	}
+
+	return null;
+};
 
 function TransferTokenModal() {
 	const [sourceToken, setSourceToken] = useState(TOKENS[0]);
 	const [sourceAmount, setSourceAmount] = useState();
 	const [destAddress, setDestAddress] = useState();
+
+	const handleTransfer = async () => {
+		const transferInfo = {
+			sourceToken,
+			destAddress,
+			sourceAmount,
+		};
+
+		const validate = validateTransfer(transferInfo);
+
+		if (validate) {
+			modal.showAlert(validate);
+			return;
+		}
+
+		const res = await modal.showConfirmTransfer(transferInfo);
+		if (res.isConfirmed) {
+			await Token.transferToken(transferInfo);
+			modal.showSuccess('Transfer successfully');
+		}
+	};
 
 	return (
 		<div className="transfer" id="transfer">
@@ -50,7 +89,12 @@ function TransferTokenModal() {
 					/>
 				</div>
 			</div>
-			<div className="button">Transfer Now</div>
+			<div
+				className="button"
+				onClick={handleTransfer}
+			>
+				Transfer Now
+			</div>
 		</div>
 	);
 }
