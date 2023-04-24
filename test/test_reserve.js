@@ -8,7 +8,7 @@ contract("Reserve contract", (accounts) => {
 		reserveA = await Reserve.new(tokenA.address, 100, 100)
 
 		// Transfer init token to reserve
-		let initialTokenAmount = web3.utils.toWei("100", "ether");
+		let initialTokenAmount = web3.utils.toWei("10000", "ether");
 		await tokenA.transfer(reserveA.address, initialTokenAmount);
 		assert.equal((await tokenA.balanceOf(reserveA.address)).toString(), initialTokenAmount);
 
@@ -24,13 +24,11 @@ contract("Reserve contract", (accounts) => {
 
 	describe("Contract deployment", () => {
 		it("Token contract deployment", async () => {
-			// null
 			assert.notEqual(tokenA.address, 0x0);
 			assert.notEqual(tokenA.address, "");
 			assert.notEqual(tokenA.address, null);
 			assert.notEqual(tokenA.address, undefined);
 
-			// attributes
 			assert.equal(await tokenA.name(), "TokenA");
 			assert.equal(await tokenA.symbol(), "TKA");
 			assert.equal(await tokenA.decimals(), 18);
@@ -75,6 +73,32 @@ contract("Reserve contract", (accounts) => {
 		it("Sell rate are set correctly", async () => {
 			await reserveA.setSellRate(200);
 			assert.equal((await reserveA.getSellRate()), 200);
+		});
+	});
+
+	describe("Exchange Token (Buy or Sell)", () => {
+		it("Buy tokenA with ETH", async () => {
+			const oldBalanceETH = web3.utils.fromWei(await web3.eth.getBalance(accounts[1]), "ether");
+			const oldBalanceTokenA = web3.utils.fromWei(await tokenA.balanceOf(accounts[1]), "ether");
+
+			const srcAmount = 1;
+			const buyRate = 150;
+			await reserveA.setBuyRate(buyRate);
+
+			// buy tokenA with srcAmount Ether
+			await reserveA.buyToken({
+				from: accounts[1],
+				value: web3.utils.toWei(srcAmount + "", "ether")
+			});
+			
+			// check tokenA balance of accounts[1] in either way
+			const newBalanceTokenA = web3.utils.fromWei(await tokenA.balanceOf(accounts[1]), "ether");
+			assert.equal(newBalanceTokenA - oldBalanceTokenA, srcAmount * buyRate);
+	
+
+			// check ETH balance of accounts[1]
+			const newBalanceETH = web3.utils.fromWei(await web3.eth.getBalance(accounts[1]), "ether");
+			assert(oldBalanceETH - newBalanceETH >= srcAmount, "ETH balance is not correct");
 		});
 	});
 });
