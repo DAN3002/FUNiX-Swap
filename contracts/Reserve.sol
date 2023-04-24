@@ -29,11 +29,6 @@ contract Reserve {
         sellRate = _sellRate;
     }
 
-    function setRates(uint256 _buyRate, uint256 _sellRate) public onlyOwner {
-        buyRate = _buyRate;
-        sellRate = _sellRate;
-    }
-
     function buyToken() public payable returns (uint256 sendBackAmount){
         /*
             Buy supportedToken with ETH
@@ -66,11 +61,6 @@ contract Reserve {
         payable(msg.sender).transfer(ethAmount);    
 
         return ethAmount;
-    }
-
-    // Check balance supportedToken of account
-    function balanceOf(address account) public view returns (uint256) {
-        return supportedToken.balanceOf(account);
     }
 
     function getBuyRate() public view returns (uint256) {

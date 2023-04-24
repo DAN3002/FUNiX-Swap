@@ -21,6 +21,10 @@ contract Exchange {
 		reserves[token] = Reserve(reserve);
 	}
 
+	function deleteReserve(address token) onlyOwner public{
+		delete reserves[token];
+	}
+
 	function exchange(address srcToken, address destToken, uint256 amount) public payable {
 		require(srcToken != destToken, "srcToken and destToken must be different");
 		require(amount > 0, "Amount must be greater than 0");
@@ -80,10 +84,6 @@ contract Exchange {
 			// send token from the Exchange to the user
 			destTokenContract.transfer(msg.sender, sendBackAmount);
 		}
-	}
-
-	function getReserve(address token) public view returns (address) {
-		return address(reserves[token]);
 	}
 
 	function getExchangeRate(address srcToken, address destToken) public view returns (uint256) {
