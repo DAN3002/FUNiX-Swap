@@ -90,15 +90,44 @@ contract("Reserve contract", (accounts) => {
 				from: accounts[1],
 				value: web3.utils.toWei(srcAmount + "", "ether")
 			});
-			
+
 			// check tokenA balance of accounts[1] in either way
 			const newBalanceTokenA = web3.utils.fromWei(await tokenA.balanceOf(accounts[1]), "ether");
 			assert.equal(newBalanceTokenA - oldBalanceTokenA, srcAmount * buyRate);
-	
+
 
 			// check ETH balance of accounts[1]
 			const newBalanceETH = web3.utils.fromWei(await web3.eth.getBalance(accounts[1]), "ether");
 			assert(oldBalanceETH - newBalanceETH >= srcAmount, "ETH balance is not correct");
+		});
+
+		it("Sell tokenA for ETH", async () => {
+			const srcAmount = 100;
+			const sellRate = 150;
+			await reserveA.setSellRate(sellRate);
+
+			// buy tokenA with srcAmount Ether
+			await tokenA.transfer(accounts[1], web3.utils.toWei(srcAmount + "", "ether"), {
+				from: accounts[0]
+			});
+			await tokenA.approve(reserveA.address, web3.utils.toWei(srcAmount + "", "ether"), {
+				from: accounts[1]
+			});
+
+			const oldBalanceETH = web3.utils.fromWei(await web3.eth.getBalance(accounts[1]), "ether");
+			const oldBalanceTokenA = web3.utils.fromWei(await tokenA.balanceOf(accounts[1]), "ether");
+
+			await reserveA.sellToken(web3.utils.toWei(srcAmount + "", "ether"), {
+				from: accounts[1]
+			});
+
+			// check tokenA balance of accounts[1] in either way
+			const newBalanceTokenA = web3.utils.fromWei(await tokenA.balanceOf(accounts[1]), "ether");
+			assert.equal(oldBalanceTokenA - newBalanceTokenA, srcAmount);
+
+			// check ETH balance of accounts[1]
+			const newBalanceETH = web3.utils.fromWei(await web3.eth.getBalance(accounts[1]), "ether");
+			assert(newBalanceETH - oldBalanceETH <= srcAmount / sellRate, "ETH balance is not correct");
 		});
 	});
 });
