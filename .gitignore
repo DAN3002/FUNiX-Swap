@@ -107,3 +107,4 @@ dist
 contracts/artifacts/
 
 # build/
+.secret

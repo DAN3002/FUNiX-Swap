@@ -42,6 +42,9 @@ module.exports = async function (deployer, network, accounts) {
 	console.log("Exchange: ", exchangeContract.address);
 	console.log("Token A: ", tokenA.address);
 	console.log("Token B: ", tokenB.address);
+	console.log("======")
+	console.log("Reserve A: ", reserveA.address);
+	console.log("Reserve B: ", reserveB.address);
 
 	// Transfer init token to reserve
 	let initialTokenAmount = web3.utils.toWei("100000", "ether");
@@ -53,20 +56,22 @@ module.exports = async function (deployer, network, accounts) {
 	});
 
 	// Add Reserve to Exchange
-	await exchangeContract.addReserve(reserveA.address, tokenA.address);
+	console.log("Add reserve A to exchange", reserveA.address, tokenA.address);
 	await exchangeContract.addReserve(reserveB.address, tokenB.address);
+	console.log("Add reserve B to exchange", reserveB.address, tokenB.address);
+	await exchangeContract.addReserve(reserveA.address, tokenA.address);
 
 	// add token to account 1
-	await tokenA.transfer(accounts[1], web3.utils.toWei("100", "ether"), {
-		from: accounts[0]
-	});
+	// await tokenA.transfer(accounts[1], web3.utils.toWei("100", "ether"), {
+	// 	from: accounts[0]
+	// });
 
-	await tokenB.transfer(accounts[1], web3.utils.toWei("10", "ether"), {
-		from: accounts[0]
-	});
+	// await tokenB.transfer(accounts[1], web3.utils.toWei("10", "ether"), {
+	// 	from: accounts[0]
+	// });
 
-	console.log(accounts[1] + " has " + web3.utils.fromWei(await tokenA.balanceOf(accounts[1]), 'ether') + " TKA");
-	console.log(accounts[1] + " has " + web3.utils.fromWei(await tokenB.balanceOf(accounts[1]), 'ether') + " TKB");
+	// console.log(accounts[1] + " has " + web3.utils.fromWei(await tokenA.balanceOf(accounts[1]), 'ether') + " TKA");
+	// console.log(accounts[1] + " has " + web3.utils.fromWei(await tokenB.balanceOf(accounts[1]), 'ether') + " TKB");
 
 	console.log("Done");
 };

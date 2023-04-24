@@ -1,3 +1,6 @@
+const HDWalletProvider = require('truffle-hdwallet-provider');
+const fs = require('fs');
+const mnemonic = fs.readFileSync(".secret").toString().trim();
 /**
  * Use this file to configure your truffle project. It's seeded with some
  * common settings for different networks and features like migrations,
@@ -68,6 +71,19 @@ module.exports = {
 			host: "127.0.0.1", // Localhost (default: none)
 			port: 8545, // Standard Ethereum port (default: none)
 			network_id: "*", // Any network (default: none)
+		},
+		tomotestnet: {
+			provider: () => new HDWalletProvider(
+				mnemonic,
+				"https://testnet.tomochain.com",
+				0,
+				1,
+				true,
+				"m/44'/889'/0'/0/",
+			),
+			network_id: "89",
+			gas: 10000000,
+			gasPrice: 10000000000000, // TomoChain requires min 10 TOMO to deploy, to fight spamming attacks
 		},
 		//
 		// An additional network, but with some advanced options…

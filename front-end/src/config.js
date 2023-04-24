@@ -4,7 +4,7 @@ import TokenContract from './abi/Token.json';
 export const RPC_ENDPOINT = 'http://localhost:8545';
 export const EXCHANGE_ABI = ExchangeContract.abi;
 export const TOKEN_ABI = TokenContract.abi;
-export const EXCHANGE_ADDRESS = '0xFaA0991f37bfBE099c9E0C682956c5DFb2FC9FCF';
+export const EXCHANGE_ADDRESS = '0x27eE5850Ab8FE6Ca641a15b73c6b2D549cab94E6';
 
 export const NATIVE_TOKEN = {
 	name: 'Ether',
@@ -17,11 +17,11 @@ export const TOKENS = [
 	{
 		name: 'Token A',
 		symbol: 'TKA',
-		address: '0x1d30d1de6767814ffC01D1A757d0789d067585e9',
+		address: '0xFDB4EDc3d924362a5b79bdB4FC18DE55Fe38520c',
 	},
 	{
 		name: 'Token B',
 		symbol: 'TKB',
-		address: '0x5111031586BD3ED0177C11F5A58981b012b30424',
+		address: '0x539cB8A3695F1E6636eEea059d4804F65f0d3495',
 	},
 ];
