@@ -8,7 +8,7 @@ contract("Reserve contract", (accounts) => {
 		reserveA = await Reserve.new(tokenA.address, 100, 100)
 
 		// Transfer init token to reserve
-		let initialTokenAmount = web3.utils.toWei("10000", "ether");
+		let initialTokenAmount = web3.utils.toWei("1000", "ether");
 		await tokenA.transfer(reserveA.address, initialTokenAmount);
 		assert.equal((await tokenA.balanceOf(reserveA.address)).toString(), initialTokenAmount);
 
