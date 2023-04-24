@@ -22,13 +22,13 @@ function BalanceModal() {
 		setToken(TOKENS[0]);
 		setBalance(100);
 
-		const inter = setInterval(() => {
-			fetchBalance();
-		}, 1 * 1000);
+		// const inter = setInterval(() => {
+		// 	fetchBalance();
+		// }, 1 * 1000);
 
-		return () => {
-			clearInterval(inter);
-		};
+		// return () => {
+		// 	clearInterval(inter);
+		// };
 	}, []);
 
 	useEffect(() => {

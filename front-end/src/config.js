@@ -1,14 +1,20 @@
 import ExchangeContract from './abi/Exchange.json';
 import TokenContract from './abi/Token.json';
 
-export const RPC_ENDPOINT = 'http://localhost:8545';
+// export const RPC_ENDPOINT = 'http://localhost:8545';
+export const RPC_ENDPOINT = 'https://testnet.tomochain.com';
 export const EXCHANGE_ABI = ExchangeContract.abi;
 export const TOKEN_ABI = TokenContract.abi;
-export const EXCHANGE_ADDRESS = '0x27eE5850Ab8FE6Ca641a15b73c6b2D549cab94E6';
+export const EXCHANGE_ADDRESS = '0xF9a2ba70C0C958D29f3fEcA49c45D97634FA5Af6';
 
+// export const NATIVE_TOKEN = {
+// 	name: 'Ether',
+// 	symbol: 'ETH',
+// 	address: '0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE',
+// };
 export const NATIVE_TOKEN = {
-	name: 'Ether',
-	symbol: 'ETH',
+	name: 'TomoChain',
+	symbol: 'TOMO',
 	address: '0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE',
 };
 
@@ -17,11 +23,11 @@ export const TOKENS = [
 	{
 		name: 'Token A',
 		symbol: 'TKA',
-		address: '0xFDB4EDc3d924362a5b79bdB4FC18DE55Fe38520c',
+		address: '0x442EE946d3746e19DB87eE997d8866eCb3c4979d',
 	},
 	{
 		name: 'Token B',
 		symbol: 'TKB',
-		address: '0x539cB8A3695F1E6636eEea059d4804F65f0d3495',
+		address: '0xE895310d8Bc5A35173F45CE6200D93d46C72657d',
 	},
 ];
