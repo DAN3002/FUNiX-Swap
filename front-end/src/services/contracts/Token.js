@@ -1,4 +1,4 @@
-import { getTokenContract, convertToWei } from '../Web3';
+import { getTokenContract, convertToWei, getWeb3Instance } from '../Web3';
 import MetaMask from '../MetaMask';
 
 import { NATIVE_TOKEN } from '../../config';
@@ -12,9 +12,10 @@ const Token = {
 		} = transferInfo;
 
 		const amountInWei = convertToWei(`${sourceAmount}`);
-		if (sourceToken === NATIVE_TOKEN.address) {
-			// transfer native token to destAddress
-			return window.web3.eth.sendTransaction({
+		if (sourceToken.address === NATIVE_TOKEN.address) {
+			// transfer eth to destAddress using sendTransaction
+			const web3 = getWeb3Instance();
+			return web3.eth.sendTransaction({
 				from: MetaMask.getWalletAddress(),
 				to: destAddress,
 				value: amountInWei,
