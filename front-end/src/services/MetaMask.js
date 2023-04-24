@@ -1,4 +1,6 @@
-import { getTokenContract } from './Web3';
+/* eslint-disable no-else-return */
+import { getTokenContract, getWeb3Instance } from './Web3';
+import { NATIVE_TOKEN } from '../config';
 
 export default {
 	isInstalled: () => {
@@ -12,19 +14,16 @@ export default {
 	getWalletAddress: () => {
 		return window.ethereum.selectedAddress;
 	},
-	getCurrentBalanceByToken: async (token) => {
-		if (token.symbol === 'ETH') {
-			const balance = await window.ethereum.request({
-				method: 'eth_getBalance',
-				params: [window.ethereum.selectedAddress, 'latest'],
-			});
-
+	getCurrentBalanceByTokenAddress: async (tokenAddress) => {
+		if (tokenAddress === NATIVE_TOKEN.address) {
+			const web3 = getWeb3Instance();
+			const balance = await web3.eth.getBalance(window.ethereum.selectedAddress);
 			// convert to ether
 			return window.web3.fromWei(balance, 'ether');
+		} else {
+			const tokenContract = getTokenContract(tokenAddress);
+			const balance = await tokenContract.methods.balanceOf(window.ethereum.selectedAddress).call();
+			return window.web3.fromWei(balance, 'ether');
 		}
-		const tokenContract = getTokenContract(token.address);
-
-		const balance = await tokenContract.methods.balanceOf(window.ethereum.selectedAddress).call();
-		return window.web3.fromWei(balance, 'ether');
 	},
 };

@@ -5,6 +5,7 @@ import TokenContract from './abi/Token.json';
 export const RPC_ENDPOINT = 'https://testnet.tomochain.com';
 export const EXCHANGE_ABI = ExchangeContract.abi;
 export const TOKEN_ABI = TokenContract.abi;
+export const BALANCE_REFRESH_INTERVAL = 10 * 1000;
 export const EXCHANGE_ADDRESS = '0xF9a2ba70C0C958D29f3fEcA49c45D97634FA5Af6';
 
 // export const NATIVE_TOKEN = {

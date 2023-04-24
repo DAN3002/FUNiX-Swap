@@ -3,7 +3,9 @@
 import { useState, useEffect } from 'react';
 
 import MetaMask from '../services/MetaMask';
-import { TOKENS } from '../config';
+import { TOKENS, BALANCE_REFRESH_INTERVAL } from '../config';
+
+let tokenAddress = '';
 
 function BalanceModal() {
 	const [walletAddress, setWalletAddress] = useState();
@@ -11,9 +13,9 @@ function BalanceModal() {
 	const [balance, setBalance] = useState(0);
 
 	const fetchBalance = async () => {
-		if (token) {
-			// console.log('token', token);
-			setBalance(await MetaMask.getCurrentBalanceByToken(token));
+		if (tokenAddress) {
+			const balanceValue = await MetaMask.getCurrentBalanceByTokenAddress(tokenAddress);
+			setBalance(balanceValue);
 		}
 	};
 
@@ -22,16 +24,17 @@ function BalanceModal() {
 		setToken(TOKENS[0]);
 		setBalance(100);
 
-		// const inter = setInterval(() => {
-		// 	fetchBalance();
-		// }, 1 * 1000);
+		const inter = setInterval(() => {
+			fetchBalance();
+		}, BALANCE_REFRESH_INTERVAL);
 
-		// return () => {
-		// 	clearInterval(inter);
-		// };
+		return () => {
+			clearInterval(inter);
+		};
 	}, []);
 
 	useEffect(() => {
+		tokenAddress = token.address;
 		fetchBalance();
 	}, [token]);
 
