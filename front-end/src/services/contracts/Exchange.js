@@ -35,7 +35,7 @@ const Exchange = {
 		return ExchangeContract.methods.exchange(
 			sourceToken.address,
 			destToken.address,
-			sourceAmount,
+			sourceAmountInWei,
 		).send({
 			from: MetaMask.getWalletAddress(),
 			value: transactionAmout,

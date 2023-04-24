@@ -29,7 +29,8 @@ function SwapTokenModal() {
 
 	useEffect(() => {
 		const getRate = async () => {
-			const rateValue = await Exchange.getExchangeRate(sourceToken.address, destToken.address, sourceAmount);
+			let rateValue = await Exchange.getExchangeRate(sourceToken.address, destToken.address, sourceAmount);
+			rateValue /= 1e18;
 			setRate(rateValue);
 			setDestAmount((sourceAmount || 0) * parseFloat(rateValue));
 		};

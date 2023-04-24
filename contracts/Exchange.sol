@@ -88,11 +88,11 @@ contract Exchange {
 
 	function getExchangeRate(address srcToken, address destToken) public view returns (uint256) {
 		if (srcToken == ETH_ADDRESS) {
-			return reserves[destToken].getBuyRate();
+			return 1e18 * reserves[destToken].getBuyRate();
 		} else if (destToken == ETH_ADDRESS) {
-			return reserves[srcToken].getSellRate();
+			return 1e18 / reserves[srcToken].getSellRate();
 		} else {
-			return reserves[srcToken].getSellRate() / reserves[destToken].getBuyRate();
+			return (1e18 * reserves[srcToken].getSellRate()) / reserves[destToken].getBuyRate();
 		}
 	}
 	

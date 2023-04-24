@@ -40,6 +40,8 @@ module.exports = async function (deployer, network, accounts) {
     const exchangeContract = await Exchange.deployed();
 
 	console.log("Exchange: ", exchangeContract.address);
+	console.log("Token A: ", tokenA.address);
+	console.log("Token B: ", tokenB.address);
 
 	// Transfer init token to reserve
 	let initialTokenAmount = web3.utils.toWei("100000", "ether");
