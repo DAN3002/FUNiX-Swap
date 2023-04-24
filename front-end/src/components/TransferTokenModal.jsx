@@ -1,4 +1,12 @@
+import { useState } from 'react';
+
+import { TOKENS } from '../config';
+
 function TransferTokenModal() {
+	const [sourceToken, setSourceToken] = useState(TOKENS[0]);
+	const [sourceAmount, setSourceAmount] = useState();
+	const [destAddress, setDestAddress] = useState();
+
 	return (
 		<div className="transfer" id="transfer">
 			<div className="input-container">
@@ -7,19 +15,24 @@ function TransferTokenModal() {
 				</label>
 				<div className="input-group">
 					<div className="dropdown">
-						<div className="dropdown__trigger">
-							<span>ETH</span>
-							<div className="dropdown__triangle" />
-						</div>
-						<div className="dropdown__content">
-							<div className="dropdown__item">ETH</div>
-							<div className="dropdown__item">KNC</div>
-						</div>
+						<select
+							className="dropdown__trigger"
+							onChange={(e) => setSourceToken(TOKENS[e.target.value])}
+						>
+							{TOKENS.map((token, i) => (
+								<option key={token.symbol} value={i} selected={token.symbol === sourceToken.symbol}>
+									{token.symbol}
+								</option>
+							))}
+						</select>
 					</div>
 					<input
 						className="input-item"
 						id="transfer-source-amount"
-						type="text"
+						type="number"
+						placeholder={0}
+						value={sourceAmount}
+						onChange={(e) => setSourceAmount(e.target.value)}
 					/>
 				</div>
 			</div>
@@ -32,6 +45,8 @@ function TransferTokenModal() {
 						className="input-item input-item--single"
 						id="transfer-address"
 						type="text"
+						value={destAddress}
+						onChange={(e) => setDestAddress(e.target.value)}
 					/>
 				</div>
 			</div>
