@@ -43,6 +43,9 @@ function TransferTokenModal() {
 		if (res.isConfirmed) {
 			await Token.transferToken(transferInfo);
 			modal.showSuccess('Transfer successfully');
+
+			setSourceAmount(0);
+			setDestAddress('');
 		}
 	};
 
