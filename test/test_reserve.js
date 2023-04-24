@@ -42,6 +42,15 @@ contract("Reserve contract", (accounts) => {
 		});
 	});
 
+	describe("Reserve contract infomation", () => {
+		it("Owner should be set correctly", async () => {
+			assert.equal(await reserveA.owner(), accounts[0]);
+		});
+		it("SupportedToken address should be set correctly", async () => {
+			assert.equal((await reserveA.supportedToken()), tokenA.address);
+		});
+	});
+
 	describe("Set Buy / Sell Rate", () => {
 		it("Only owner can set buy rate", async () => {
 			try {
