@@ -75,4 +75,6 @@ contract Reserve {
         require(msg.sender == owner, "Only owner can call this function");
         _;
     }
+
+    receive() external payable {}
 }

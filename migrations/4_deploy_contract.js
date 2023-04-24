@@ -7,71 +7,69 @@ const Exchange = artifacts.require("Exchange");
 const gasLimit = 2206142;
 
 module.exports = async function (deployer, network, accounts) {
-	console.log("Start deploy contract");
-	console.log("Deploying on network: " + network);
-    console.log("Deployer account: " + accounts[0]);
+	// console.log("Start deploy contract");
+	// console.log("Deploying on network: " + network);
+    // console.log("Deployer account: " + accounts[0]);
 
-	console.log("======= Deploy Token =======");
-	await deployer.deploy(TokenA, "TokenA", "TKA", 18);
-	const tokenA = await TokenA.deployed();
+	// console.log("======= Deploy Token =======");
+	// await deployer.deploy(TokenA, "TokenA", "TKA", 18);
+	// const tokenA = await TokenA.deployed();
 
-	await deployer.deploy(TokenB, "TokenB", "TKB", 18);
-	const tokenB = await TokenB.deployed();
+	// await deployer.deploy(TokenB, "TokenB", "TKB", 18);
+	// const tokenB = await TokenB.deployed();
 
-	console.log("Token A: ", tokenA.address);
-	console.log("Token B: ", tokenB.address);
+	// console.log("Token A: ", tokenA.address);
+	// console.log("Token B: ", tokenB.address);
 
-	console.log("======= Deploy Reserve =======");
-	await deployer.deploy(ReserveA, tokenA.address, 100, 100, {
-		gas: gasLimit
-	});
-	const reserveA = await ReserveA.deployed();
+	// console.log("======= Deploy Reserve =======");
+	// await deployer.deploy(ReserveA, tokenA.address, 100, 100, {
+	// 	gas: gasLimit
+	// });
+	// const reserveA = await ReserveA.deployed();
 
-	await deployer.deploy(ReserveB, tokenB.address, 100, 100, {
-		gas: gasLimit
-	});
-	const reserveB = await ReserveB.deployed();
+	// await deployer.deploy(ReserveB, tokenB.address, 100, 100, {
+	// 	gas: gasLimit
+	// });
+	// const reserveB = await ReserveB.deployed();
 
-	console.log("Reserve A: ", reserveA.address);
-	console.log("Reserve B: ", reserveB.address);
+	// console.log("Reserve A: ", reserveA.address);
+	// console.log("Reserve B: ", reserveB.address);
 
-	console.log("======= Deploy Exchange =======");
-	await deployer.deploy(Exchange);
-    const exchangeContract = await Exchange.deployed();
+	// console.log("======= Deploy Exchange =======");
+	// await deployer.deploy(Exchange);
+    // const exchangeContract = await Exchange.deployed();
 
-	console.log("Exchange: ", exchangeContract.address);
-	console.log("Token A: ", tokenA.address);
-	console.log("Token B: ", tokenB.address);
-	console.log("======")
-	console.log("Reserve A: ", reserveA.address);
-	console.log("Reserve B: ", reserveB.address);
+	// console.log("Exchange: ", exchangeContract.address);
+	// console.log("Token A: ", tokenA.address);
+	// console.log("Token B: ", tokenB.address);
+	// console.log("======")
+	// console.log("Reserve A: ", reserveA.address);
+	// console.log("Reserve B: ", reserveB.address);
 
-	// Transfer init token to reserve
-	let initialTokenAmount = web3.utils.toWei("100000", "ether");
-	await tokenA.transfer(reserveA.address, initialTokenAmount, {
-		from: accounts[0]
-	});
-	await tokenB.transfer(reserveB.address, initialTokenAmount, {
-		from: accounts[0]
-	});
-
-	// Add Reserve to Exchange
-	console.log("Add reserve A to exchange", reserveA.address, tokenA.address);
-	await exchangeContract.addReserve(reserveB.address, tokenB.address);
-	console.log("Add reserve B to exchange", reserveB.address, tokenB.address);
-	await exchangeContract.addReserve(reserveA.address, tokenA.address);
-
-	// add token to account 1
-	// await tokenA.transfer(accounts[1], web3.utils.toWei("100", "ether"), {
+	// // Transfer init token to reserve
+	// let initialTokenAmount = web3.utils.toWei("100000", "ether");
+	// await tokenA.transfer(reserveA.address, initialTokenAmount, {
+	// 	from: accounts[0]
+	// });
+	// await tokenB.transfer(reserveB.address, initialTokenAmount, {
 	// 	from: accounts[0]
 	// });
 
-	// await tokenB.transfer(accounts[1], web3.utils.toWei("10", "ether"), {
-	// 	from: accounts[0]
-	// });
+	// // Add Reserve to Exchange
+	// await exchangeContract.addReserve(reserveB.address, tokenB.address);
+	// await exchangeContract.addReserve(reserveA.address, tokenA.address);
 
-	// console.log(accounts[1] + " has " + web3.utils.fromWei(await tokenA.balanceOf(accounts[1]), 'ether') + " TKA");
-	// console.log(accounts[1] + " has " + web3.utils.fromWei(await tokenB.balanceOf(accounts[1]), 'ether') + " TKB");
+	// // add token to account 1
+	// // await tokenA.transfer(accounts[1], web3.utils.toWei("100", "ether"), {
+	// // 	from: accounts[0]
+	// // });
 
-	console.log("Done");
+	// // await tokenB.transfer(accounts[1], web3.utils.toWei("10", "ether"), {
+	// // 	from: accounts[0]
+	// // });
+
+	// // console.log(accounts[1] + " has " + web3.utils.fromWei(await tokenA.balanceOf(accounts[1]), 'ether') + " TKA");
+	// // console.log(accounts[1] + " has " + web3.utils.fromWei(await tokenB.balanceOf(accounts[1]), 'ether') + " TKB");
+
+	// console.log("Done");
 };

@@ -17,7 +17,7 @@ contract Exchange {
         _;
     }
 
-	function addReserve(address reserve, address token) onlyOwner public{
+	function addReserve(address payable reserve, address token) onlyOwner public{
 		reserves[token] = Reserve(reserve);
 	}
 
