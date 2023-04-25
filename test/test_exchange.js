@@ -127,4 +127,28 @@ contract("Exchange contract", function (accounts) {
 			assert.equal(rate, 1e18);
 		});
 	});
+
+	describe("Exchange Token with User", () => {
+		it("Swap ETH to Token", async () => {
+			await exchange.addReserve(reserveA.address, tokenA.address);
+
+			const oldBalanceETH = web3.utils.fromWei(await web3.eth.getBalance(accounts[1]), "ether");
+			const oldBalanceTokenA = web3.utils.fromWei(await tokenA.balanceOf(accounts[1]), "ether");
+
+			const srcAmount = 1;
+			const buyRate = 150;
+			await reserveA.setBuyRate(buyRate);
+
+			await exchange.exchange(tokenA.address, NATIVE_TOKEN, srcAmount, {
+				from: accounts[1],
+				value: web3.utils.toWei(srcAmount.toString(), "ether")
+			});
+
+			const newBalanceETH = web3.utils.fromWei(await web3.eth.getBalance(accounts[1]), "ether");
+			const newBalanceTokenA = web3.utils.fromWei(await tokenA.balanceOf(accounts[1]), "ether");
+
+			assert(oldBalanceETH - newBalanceETH >= srcAmount);
+			assert(newBalanceTokenA - oldBalanceTokenA == srcAmount * buyRate);
+		});
+	});
 });
