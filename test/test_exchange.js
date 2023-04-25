@@ -122,7 +122,7 @@ contract("Exchange contract", function (accounts) {
 			const rate = await exchange.getExchangeRate(tokenA.address, tokenB.address);
 			// convert rate to either
 			const rateInEther = web3.utils.fromWei(rate.toString(), "ether");
-			assert.equal(rateInEther, sellRate / buyRate);
+			assert.equal(rateInEther, buyRate / sellRate);
 		});
 
 		it("Get exchange rate for swap Token to itself", async () => {
@@ -214,7 +214,7 @@ contract("Exchange contract", function (accounts) {
 			const newBalanceTokenB = web3.utils.fromWei(await tokenB.balanceOf(accounts[1]), "ether");
 
 			assert(oldBalanceTokenA - newBalanceTokenA == srcAmount);
-			assert(newBalanceTokenB - oldBalanceTokenB == srcAmount * sellRate / buyRate);
+			assert(newBalanceTokenB - oldBalanceTokenB == srcAmount * buyRate / sellRate);
 		});
 
 		it("Swap Token to itself", async () => {
@@ -228,16 +228,14 @@ contract("Exchange contract", function (accounts) {
 				from: accounts[1]
 			});
 
-			const oldBalanceTokenA = web3.utils.fromWei(await tokenA.balanceOf(accounts[1]), "ether");
-
-			await exchange.exchange(tokenA.address, tokenA.address, sourceAmountInWei, {
-				from: accounts[1]
-			});
-
-			const newBalanceTokenA = web3.utils.fromWei(await tokenA.balanceOf(accounts[1]), "ether");
-
-			assert(newBalanceTokenA == oldBalanceTokenA);
-
+			try {
+				await exchange.exchange(tokenA.address, tokenA.address, sourceAmountInWei, {
+					from: accounts[1]
+				});
+				assert.fail("srcToken and destToken must be different.");
+			} catch (error) {
+				assert.ok(/revert/i.test(error.message));
+			}
 		});
 
 	});

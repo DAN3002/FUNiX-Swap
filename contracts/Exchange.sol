@@ -94,7 +94,7 @@ contract Exchange {
 		} else if (srcToken == destToken) {
 			return 1e18;
 		} else {
-			return (1e18 * reserves[srcToken].getSellRate()) / reserves[destToken].getBuyRate();
+			return (1e18 * reserves[destToken].getBuyRate()) /  reserves[srcToken].getSellRate();
 		}
 	}
 	
