@@ -94,8 +94,11 @@ contract("Exchange contract", function (accounts) {
 			const buyRate = 150;
 			await reserveA.setBuyRate(buyRate);
 
-			const rate = await exchange.getExchangeRate(tokenA.address, NATIVE_TOKEN);
-			assert.equal(rate, buyRate * 1e18);
+			const rate = await exchange.getExchangeRate(NATIVE_TOKEN, tokenA.address);
+			// convert rate to either
+			const rateInEther = web3.utils.fromWei(rate.toString(), "ether");
+
+			assert.equal(rateInEther, buyRate);
 		});
 
 		it("Get exchange rate for swap Token to ETH", async () => {
@@ -113,11 +116,13 @@ contract("Exchange contract", function (accounts) {
 
 			const buyRate = 150;
 			const sellRate = 100;
-			await reserveA.setBuyRate(buyRate);
-			await reserveB.setSellRate(sellRate);
+			await reserveA.setSellRate(sellRate);
+			await reserveB.setBuyRate(buyRate);
 
 			const rate = await exchange.getExchangeRate(tokenA.address, tokenB.address);
-			assert.equal(rate, buyRate * 1e18 / sellRate);
+			// convert rate to either
+			const rateInEther = web3.utils.fromWei(rate.toString(), "ether");
+			assert.equal(rateInEther, sellRate / buyRate);
 		});
 
 		it("Get exchange rate for swap Token to itself", async () => {
