@@ -29,7 +29,7 @@ contract Reserve {
         sellRate = _sellRate;
     }
 
-    function buyToken() public payable returns (uint256 sendBackAmount){
+    function buyToken() public payable returns (uint256 sendBackAmount) {
         /*
             Buy supportedToken with ETH
             => Contract recieves ETH and sends supportedToken
@@ -37,7 +37,10 @@ contract Reserve {
         require(msg.value > 0, "You must send ETH to buy tokens");
 
         uint256 tokenAmount = msg.value * buyRate;
-        require(supportedToken.balanceOf(address(this)) >= tokenAmount, "Not enough token in the reserve");
+        require(
+            supportedToken.balanceOf(address(this)) >= tokenAmount,
+            "Not enough token in the reserve"
+        );
 
         // supportedToken.approve(msg.sender, tokenAmount);
         supportedToken.transfer(msg.sender, tokenAmount);
@@ -45,7 +48,9 @@ contract Reserve {
         return tokenAmount;
     }
 
-    function sellToken(uint256 sellAmount) public returns (uint256 sendBackAmount){
+    function sellToken(
+        uint256 sellAmount
+    ) public returns (uint256 sendBackAmount) {
         /*
             Sell supportedToken for ETH
             => Contract recieves supportedToken and sends ETH
@@ -53,12 +58,21 @@ contract Reserve {
         uint256 ethAmount = sellAmount / sellRate;
 
         require(sellAmount > 0, "You must sell at least some token");
-        require(supportedToken.balanceOf(msg.sender) >= sellAmount, "Not enough token in your account");
-        require(supportedToken.allowance(msg.sender, address(this)) >= sellAmount, "Not enough allowance for this contract");
-        require(address(this).balance >= ethAmount, "Not enough ETH in the reserve");
+        require(
+            supportedToken.balanceOf(msg.sender) >= sellAmount,
+            "Not enough token in your account"
+        );
+        require(
+            supportedToken.allowance(msg.sender, address(this)) >= sellAmount,
+            "Not enough allowance for this contract"
+        );
+        require(
+            address(this).balance >= ethAmount,
+            "Not enough ETH in the reserve"
+        );
 
         supportedToken.transferFrom(msg.sender, address(this), sellAmount);
-        payable(msg.sender).transfer(ethAmount);    
+        payable(msg.sender).transfer(ethAmount);
 
         return ethAmount;
     }
