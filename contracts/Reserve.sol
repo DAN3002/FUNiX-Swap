@@ -21,14 +21,26 @@ contract Reserve {
         owner = msg.sender;
     }
 
+    /**
+     * @dev Set buy rate
+     * @param _buyRate buy rate
+     */
     function setBuyRate(uint256 _buyRate) public onlyOwner {
         buyRate = _buyRate;
     }
 
+    /**
+     * @dev Set sell rate
+     * @param _sellRate sell rate
+     */
     function setSellRate(uint256 _sellRate) public onlyOwner {
         sellRate = _sellRate;
     }
 
+    /**
+     * @dev Buy supportedToken with ETH
+     * @return sendBackAmount amount of supportedToken received
+     */
     function buyToken() public payable returns (uint256 sendBackAmount) {
         /*
             Buy supportedToken with ETH
@@ -48,6 +60,11 @@ contract Reserve {
         return tokenAmount;
     }
 
+    /**
+     * @dev Sell supportedToken for ETH
+     * @param sellAmount amount of supportedToken to sell
+     * @return sendBackAmount amount of ETH received
+     */
     function sellToken(
         uint256 sellAmount
     ) public returns (uint256 sendBackAmount) {
@@ -77,14 +94,25 @@ contract Reserve {
         return ethAmount;
     }
 
+    /**
+     * @dev Get buy rate
+     * @return buyRate buy rate
+     */
     function getBuyRate() public view returns (uint256) {
         return buyRate;
     }
 
+    /**
+     * @dev Get sell rate
+     * @return sellRate sell rate
+     */
     function getSellRate() public view returns (uint256) {
         return sellRate;
     }
 
+    /**
+     * @dev Modifier to check if the caller is the owner
+     */
     modifier onlyOwner() {
         require(msg.sender == owner, "Only owner can call this function");
         _;
