@@ -186,5 +186,35 @@ contract("Exchange contract", function (accounts) {
 			assert(oldBalanceTokenA - newBalanceTokenA == srcAmount);
 		});
 
+		it("Swap Token to Token", async () => {
+			await exchange.addReserve(reserveA.address, tokenA.address);
+			await exchange.addReserve(reserveB.address, tokenB.address);
+
+			const srcAmount = 100;
+			const sellRate = 150;
+			const buyRate = 200;
+			await reserveA.setSellRate(sellRate);
+			await reserveB.setBuyRate(buyRate);
+
+			const sourceAmountInWei = web3.utils.toWei(srcAmount.toString(), "ether");
+
+			await tokenA.transfer(accounts[1], sourceAmountInWei);
+			await tokenA.approve(exchange.address, sourceAmountInWei, {
+				from: accounts[1]
+			});
+
+			const oldBalanceTokenA = web3.utils.fromWei(await tokenA.balanceOf(accounts[1]), "ether");
+			const oldBalanceTokenB = web3.utils.fromWei(await tokenB.balanceOf(accounts[1]), "ether");
+
+			await exchange.exchange(tokenA.address, tokenB.address, sourceAmountInWei, {
+				from: accounts[1]
+			});
+
+			const newBalanceTokenA = web3.utils.fromWei(await tokenA.balanceOf(accounts[1]), "ether");
+			const newBalanceTokenB = web3.utils.fromWei(await tokenB.balanceOf(accounts[1]), "ether");
+
+			assert(oldBalanceTokenA - newBalanceTokenA == srcAmount);
+			assert(newBalanceTokenB - oldBalanceTokenB == srcAmount * sellRate / buyRate);
+		});
 	});
 });
