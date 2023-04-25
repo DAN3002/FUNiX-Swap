@@ -157,5 +157,34 @@ contract("Exchange contract", function (accounts) {
 			assert(oldBalanceETH - newBalanceETH >= srcAmount);
 			assert(newBalanceTokenA - oldBalanceTokenA == srcAmount * buyRate);
 		});
+
+		it("Swap Token to ETH", async () => {
+			await exchange.addReserve(reserveA.address, tokenA.address);
+
+			const srcAmount = 100;
+			const sellRate = 150;
+			await reserveA.setSellRate(sellRate);
+
+			const sourceAmountInWei = web3.utils.toWei(srcAmount.toString(), "ether");
+
+			await tokenA.transfer(accounts[1], sourceAmountInWei);
+			await tokenA.approve(exchange.address, sourceAmountInWei, {
+				from: accounts[1]
+			});
+
+			const oldBalanceETH = web3.utils.fromWei(await web3.eth.getBalance(accounts[1]), "ether");
+			const oldBalanceTokenA = web3.utils.fromWei(await tokenA.balanceOf(accounts[1]), "ether");
+
+			await exchange.exchange(tokenA.address, NATIVE_TOKEN, sourceAmountInWei, {
+				from: accounts[1]
+			});
+
+			const newBalanceETH = web3.utils.fromWei(await web3.eth.getBalance(accounts[1]), "ether");
+			const newBalanceTokenA = web3.utils.fromWei(await tokenA.balanceOf(accounts[1]), "ether");
+
+			assert(newBalanceETH - oldBalanceETH <= srcAmount / sellRate);
+			assert(oldBalanceTokenA - newBalanceTokenA == srcAmount);
+		});
+
 	});
 });
