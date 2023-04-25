@@ -49,6 +49,12 @@ contract("Exchange contract", function (accounts) {
 		});
 	});
 
+	describe("Exchange contract infomation", () => {
+		it("Owner should be set correctly", async () => {
+			assert.equal(await exchange.owner(), accounts[0]);
+		});
+	});
+
 	describe("Reserve management", () => {
 		it("Only owner can add/remove reserve", async () => {
 			try {
