@@ -12,11 +12,19 @@ contract Exchange {
         owner = msg.sender;
     }
 
+    /**
+     * @dev Modifier to check if the caller is the owner
+     */
     modifier onlyOwner() {
         require(msg.sender == owner, "Only owner can call this function");
         _;
     }
 
+    /**
+     * @dev Add reserve
+     * @param reserve address of reserve
+     * @param token address of token
+     */
     function addReserve(
         address payable reserve,
         address token
@@ -24,6 +32,10 @@ contract Exchange {
         reserves[token] = Reserve(reserve);
     }
 
+    /**
+     * @dev Delete reserve
+     * @param token address of token
+     */
     function deleteReserve(address token) public onlyOwner {
         delete reserves[token];
     }
@@ -103,6 +115,12 @@ contract Exchange {
         }
     }
 
+    /**
+     * @dev Get exchange rate between two tokens
+     * @param srcToken address of source token
+     * @param destToken address of destination token
+     * @return exchange rate
+     */
     function getExchangeRate(
         address srcToken,
         address destToken
