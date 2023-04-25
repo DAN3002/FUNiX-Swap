@@ -4,6 +4,7 @@ const Token = artifacts.require("./Token.sol");
 
 contract("Exchange contract", function (accounts) {
 	let tokenA, tokenB, reserveA, reserveB, exchange;
+	const NULL_ADDRESS = "0x0000000000000000000000000000000000000000"
 
 	before(async () => {
 		tokenA = await Token.new("TokenA", "TKA", 18);
@@ -44,6 +45,40 @@ contract("Exchange contract", function (accounts) {
             assert.notEqual(exchange.address, "");
             assert.notEqual(exchange.address, null);
             assert.notEqual(exchange.address, undefined);
+        });
+    });
+
+	describe("Reserve management", () => {
+        it("Only owner can add/remove reserve", async () => {
+            try {
+                await exchange.addReserve(reserveA.address, tokenA.address, {from: accounts[1]});
+                assert.fail("Only owner can call this function");
+            } catch (error) {
+                assert.ok(/revert/i.test(error.message));
+            }
+            try {
+                await exchange.addReserve(reserveA.address, tokenA.address, {from: accounts[1]});
+                assert.fail("Only owner can call this function");
+            } catch (error) {
+                assert.ok(/revert/i.test(error.message));
+            }
+
+        });
+
+        it("Add reserve", async () => {
+            await exchange.addReserve(reserveA.address, tokenA.address);
+            await exchange.addReserve(reserveB.address, tokenB.address);
+
+            assert.equal((await exchange.reserves(tokenA.address)).toString(), reserveA.address);
+            assert.equal((await exchange.reserves(tokenB.address)).toString(), reserveB.address);
+        });
+
+        it("Remove reserve", async () => {
+            await exchange.deleteReserve(tokenA.address);
+            await exchange.deleteReserve(tokenB.address);
+
+            assert.equal((await exchange.reserves(tokenA.address)).toString(), NULL_ADDRESS);
+            assert.equal((await exchange.reserves(tokenB.address)).toString(), NULL_ADDRESS);
         });
     });
 });
