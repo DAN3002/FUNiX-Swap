@@ -4,6 +4,7 @@ import { TOKENS } from '../config';
 import modal from '../utils/modal';
 import Token from '../services/contracts/Token';
 import MetaMask from '../services/MetaMask';
+import { checkValidAddress } from '../services/Web3';
 
 const validateTransfer = async (transferInfo) => {
 	const { destAddress, sourceAmount } = transferInfo;
@@ -16,6 +17,11 @@ const validateTransfer = async (transferInfo) => {
 	// check if dest address is valid
 	if (!destAddress) {
 		return 'Destination address must be provided';
+	}
+
+	// check if dest address is valid
+	if (!checkValidAddress(destAddress)) {
+		return 'Destination address is invalid';
 	}
 
 	// Check if source token balance is enough

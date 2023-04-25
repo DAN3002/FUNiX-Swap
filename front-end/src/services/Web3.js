@@ -72,3 +72,13 @@ export const getGasPrice = () => {
 	const web3 = getWeb3Instance();
 	return web3.eth.getGasPrice();
 };
+
+/**
+ * Checks if the address is valid.
+ * @param {string} address - The address to check.
+ * @returns {boolean} True if the address is valid, false otherwise.
+ */
+export const checkValidAddress = (address) => {
+	const web3 = getWeb3Instance();
+	return web3.utils.isAddress(address);
+};
