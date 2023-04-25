@@ -53,7 +53,6 @@ function SwapTokenModal() {
 			modal.showAlert(validate);
 			return;
 		}
-
 		const res = await modal.showConfirmSwap(swapInfo);
 		if (res.isConfirmed) {
 			try {

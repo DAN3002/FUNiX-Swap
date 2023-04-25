@@ -34,3 +34,13 @@ export const convertToWei = (amount) => {
 	const web3 = getWeb3Instance();
 	return web3.utils.toWei(amount, 'ether');
 };
+
+export const convertFromWei = (amount) => {
+	const web3 = getWeb3Instance();
+	return web3.utils.fromWei(amount, 'ether');
+};
+
+export const getGasPrice = () => {
+	const web3 = getWeb3Instance();
+	return web3.eth.getGasPrice();
+};

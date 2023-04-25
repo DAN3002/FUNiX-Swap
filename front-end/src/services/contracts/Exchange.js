@@ -40,6 +40,14 @@ const Exchange = {
 			value: transactionAmout,
 		});
 	},
+	getExchangeABI: (sourceToken, destToken, amount) => {
+		const sourceAmountInWei = convertToWei(`${amount}`);
+		return ExchangeContract.methods.exchange(
+			sourceToken.address,
+			destToken.address,
+			sourceAmountInWei,
+		);
+	},
 };
 
 export default Exchange;
