@@ -8,7 +8,7 @@ contract Reserve {
     uint256 buyRate;
     // 1 supportedToken = sellRate ETH
     uint256 sellRate;
-    address owner;
+    address public owner;
 
     constructor(
         address _supportedToken,
