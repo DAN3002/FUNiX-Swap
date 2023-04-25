@@ -37,4 +37,13 @@ contract("Exchange contract", function (accounts) {
 	});
 
 	beforeEach(async () => {});
+
+	describe("Contract deployment", () => {
+        it("Exchange contract deployment", async () => {
+            assert.notEqual(exchange.address, 0x0);
+            assert.notEqual(exchange.address, "");
+            assert.notEqual(exchange.address, null);
+            assert.notEqual(exchange.address, undefined);
+        });
+    });
 });
