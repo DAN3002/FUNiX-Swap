@@ -82,6 +82,7 @@ const modal = {
 				</div>
 			`,
 			showConfirmButton: false,
+			width: 750,
 		});
 	},
 	closeAll: () => {

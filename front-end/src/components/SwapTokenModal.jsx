@@ -56,10 +56,15 @@ function SwapTokenModal() {
 
 		const res = await modal.showConfirmSwap(swapInfo);
 		if (res.isConfirmed) {
-			modal.showLoading();
-			await Exchange.swapToken(swapInfo);
-			modal.closeAll();
-			modal.showSuccess('Swap successfully');
+			try {
+				modal.showLoading();
+				await Exchange.swapToken(swapInfo);
+				modal.closeAll();
+				modal.showSuccess('Swap successfully');
+			} catch (error) {
+				modal.closeAll();
+				modal.showAlert(error.message);
+			}
 
 			// reset form
 			setSourceAmount('');
