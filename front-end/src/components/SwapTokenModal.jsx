@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 
-import { TOKENS } from '../config';
+import { TOKENS, EXCHANGE_RATE_REFRESH_INTERVAL } from '../config';
 import Exchange from '../services/contracts/Exchange';
 import modal from '../utils/modal';
 import Metamask from '../services/MetaMask';
@@ -27,6 +27,10 @@ const validateSwapInfo = async (swapInfo) => {
 	return null;
 };
 
+let sourceAddress = TOKENS[0].address;
+let destAddress = TOKENS[1].address;
+let amount = 0;
+
 function SwapTokenModal() {
 	const [sourceToken, setSourceToken] = useState(TOKENS[0]);
 	const [destToken, setDestToken] = useState(TOKENS[1]);
@@ -34,16 +38,29 @@ function SwapTokenModal() {
 	const [destAmount, setDestAmount] = useState();
 	const [rate, setRate] = useState();
 
-	useEffect(() => {
-		const getRate = async () => {
-			let rateValue = await Exchange.getExchangeRate(sourceToken.address, destToken.address, sourceAmount);
-			rateValue /= 1e18;
-			setRate(rateValue);
-			setDestAmount((sourceAmount || 0) * parseFloat(rateValue));
-		};
+	const getRate = async () => {
+		let rateValue = await Exchange.getExchangeRate(sourceAddress, destAddress, sourceAmount);
+		rateValue /= 1e18;
+		setRate(rateValue);
+		setDestAmount((amount || 0) * parseFloat(rateValue));
+	};
 
+	useEffect(() => {
+		sourceAddress = sourceToken.address;
+		destAddress = destToken.address;
+		amount = sourceAmount;
 		getRate();
 	}, [sourceToken, destToken, sourceAmount]);
+
+	useEffect(() => {
+		const inter = setInterval(() => {
+			getRate();
+		}, EXCHANGE_RATE_REFRESH_INTERVAL);
+
+		return () => {
+			clearInterval(inter);
+		};
+	}, []);
 
 	const handleSwap = async () => {
 		const swapInfo = {

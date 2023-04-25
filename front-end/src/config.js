@@ -6,6 +6,7 @@ export const RPC_ENDPOINT = 'https://testnet.tomochain.com';
 export const EXCHANGE_ABI = ExchangeContract.abi;
 export const TOKEN_ABI = TokenContract.abi;
 export const BALANCE_REFRESH_INTERVAL = 10 * 1000;
+export const EXCHANGE_RATE_REFRESH_INTERVAL = 10 * 1000;
 export const EXCHANGE_ADDRESS = '0x00711c309D38ae7Eeebe25326095fF86a8052689';
 
 // export const NATIVE_TOKEN = {
