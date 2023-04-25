@@ -41,8 +41,15 @@ function TransferTokenModal() {
 
 		const res = await modal.showConfirmTransfer(transferInfo);
 		if (res.isConfirmed) {
-			await Token.transferToken(transferInfo);
-			modal.showSuccess('Transfer successfully');
+			try {
+				modal.showLoading();
+				await Token.transferToken(transferInfo);
+				modal.closeAll();
+				modal.showSuccess('Transfer successfully');
+			} catch (error) {
+				modal.closeAll();
+				modal.showAlert(error.message);
+			}
 
 			setSourceAmount(0);
 			setDestAddress('');
