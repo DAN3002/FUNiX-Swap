@@ -22,7 +22,6 @@ function BalanceModal() {
 	useEffect(() => {
 		setWalletAddress(MetaMask.getWalletAddress());
 		setToken(TOKENS[0]);
-		setBalance(100);
 
 		const inter = setInterval(() => {
 			fetchBalance();
