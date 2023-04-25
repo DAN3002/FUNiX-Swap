@@ -4,6 +4,11 @@ import MetaMask from '../MetaMask';
 import { NATIVE_TOKEN } from '../../config';
 
 const Token = {
+	/**
+	 * Transfers token to destAddress.
+	 * @param {object} transferInfo - The transfer information.
+	 * @returns {object} The transfer transaction.
+	 */
 	transferToken: (transferInfo) => {
 		const {
 			sourceToken,

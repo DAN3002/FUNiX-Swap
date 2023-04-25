@@ -1,8 +1,20 @@
 import Exchange from './contracts/Exchange';
-import { NATIVE_TOKEN } from '../config';
+import {
+	NATIVE_TOKEN,
+} from '../config';
 import MetaMask from './MetaMask';
-import { getGasPrice, convertFromWei } from './Web3';
+import {
+	getGasPrice,
+	convertFromWei,
+} from './Web3';
 
+/**
+ * Gets the swap fee.
+ * @param {object} sourceToken - The source token.
+ * @param {object} destToken - The destination token.
+ * @param {string} amount - The amount to swap.
+ * @returns {string} The swap fee.
+ */
 const _getSwapFee = async (sourceToken, destToken, amount) => {
 	let gasAmount = 0;
 	const gasPrice = await getGasPrice();
@@ -28,6 +40,13 @@ const _getSwapFee = async (sourceToken, destToken, amount) => {
 	return gasAmount * gasPrice;
 };
 
+/**
+ * Gets the gas fee in ether.
+ * @param {object} sourceToken - The source token.
+ * @param {object} destToken - The destination token.
+ * @param {string} amount - The amount to swap.
+ * @returns {string} The gas fee in ether.
+ */
 export const getSwapFee = async (sourceToken, destToken, amount) => {
 	const fee = await _getSwapFee(sourceToken, destToken, amount);
 	return convertFromWei(fee);
