@@ -3,8 +3,9 @@ import { useState, useEffect } from 'react';
 import { TOKENS } from '../config';
 import Exchange from '../services/contracts/Exchange';
 import modal from '../utils/modal';
+import Metamask from '../services/MetaMask';
 
-const validateSwapInfo = (swapInfo) => {
+const validateSwapInfo = async (swapInfo) => {
 	const { sourceToken, destToken, sourceAmount } = swapInfo;
 
 	// check if too token are the same
@@ -15,6 +16,12 @@ const validateSwapInfo = (swapInfo) => {
 	// check if source amount is valid
 	if (!sourceAmount || sourceAmount <= 0) {
 		return 'Source amount must be greater than 0';
+	}
+
+	// Check if source token balance is enough
+	const currentBalance = await Metamask.getCurrentBalanceByTokenAddress(sourceToken.address);
+	if (currentBalance < sourceAmount) {
+		return `You don't have enough ${sourceToken.symbol} to swap`;
 	}
 
 	return null;
@@ -47,7 +54,7 @@ function SwapTokenModal() {
 			rate,
 		};
 
-		const validate = validateSwapInfo(swapInfo);
+		const validate = await validateSwapInfo(swapInfo);
 
 		if (validate) {
 			modal.showAlert(validate);

@@ -3,8 +3,9 @@ import { useState } from 'react';
 import { TOKENS } from '../config';
 import modal from '../utils/modal';
 import Token from '../services/contracts/Token';
+import MetaMask from '../services/MetaMask';
 
-const validateTransfer = (transferInfo) => {
+const validateTransfer = async (transferInfo) => {
 	const { destAddress, sourceAmount } = transferInfo;
 
 	// check if source amount is valid
@@ -15,6 +16,12 @@ const validateTransfer = (transferInfo) => {
 	// check if dest address is valid
 	if (!destAddress) {
 		return 'Destination address must be provided';
+	}
+
+	// Check if source token balance is enough
+	const currentBalance = await MetaMask.getCurrentBalanceByTokenAddress(transferInfo.sourceToken.address);
+	if (currentBalance < sourceAmount) {
+		return `You don't have enough ${transferInfo.sourceToken.symbol} to transfer`;
 	}
 
 	return null;
@@ -32,7 +39,7 @@ function TransferTokenModal() {
 			sourceAmount,
 		};
 
-		const validate = validateTransfer(transferInfo);
+		const validate = await validateTransfer(transferInfo);
 
 		if (validate) {
 			modal.showAlert(validate);
