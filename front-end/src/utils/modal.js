@@ -22,7 +22,6 @@ const modal = {
 					<div class="dest-swap">${destAmount} ${destToken.symbol}</div>
 				</div>
 				<div class="modal__rate"><span class="rate-swap">1 ${sourceToken.symbol} = ${rate} ${destToken.symbol}</span></div>
-				<!-- <div class="modal__fee">GAS Fee: <span id="gas-amount">0.0001 TOMO</span></div> -->
 			`,
 			icon: 'warning',
 			showCancelButton: true,
@@ -47,7 +46,6 @@ const modal = {
 				<div class="modal__token">
 					<p>${sourceAmount} ${sourceToken.symbol} to <b>${destAddress}</b></p>
 				</div>
-				<!-- <div class="modal__fee">GAS Fee: <span id="gas-amount">0.0001 TOMO</span></div> -->
 			`,
 			icon: 'warning',
 			showCancelButton: true,
