@@ -144,9 +144,11 @@ contract("Exchange contract", function (accounts) {
 			const buyRate = 150;
 			await reserveA.setBuyRate(buyRate);
 
-			await exchange.exchange(tokenA.address, NATIVE_TOKEN, srcAmount, {
+			const sourceAmountInWei = web3.utils.toWei(srcAmount.toString(), "ether");
+
+			await exchange.exchange(NATIVE_TOKEN, tokenA.address, sourceAmountInWei, {
 				from: accounts[1],
-				value: web3.utils.toWei(srcAmount.toString(), "ether")
+				value: sourceAmountInWei
 			});
 
 			const newBalanceETH = web3.utils.fromWei(await web3.eth.getBalance(accounts[1]), "ether");
