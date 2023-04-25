@@ -91,6 +91,8 @@ contract Exchange {
 			return 1e18 * reserves[destToken].getBuyRate();
 		} else if (destToken == ETH_ADDRESS) {
 			return 1e18 / reserves[srcToken].getSellRate();
+		} else if (sourceToken == destToken) {
+			return 1e18;
 		} else {
 			return (1e18 * reserves[srcToken].getSellRate()) / reserves[destToken].getBuyRate();
 		}
